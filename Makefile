@@ -4,7 +4,7 @@ man:
 	@echo " make all   -  kompiliert die Enigma und erstellt Javadoc Dateien"
 	@echo " make clean -  löscht mit make all, make run oder make doc erstellte Dateien"
 	@echo " make doc   -  erstellt Javadoc Dateien"
-	@echo " make gui   -  kompiliert und startet die GUI"
+	@echo " make gui   -  startet die GUI"
 	@echo " make jar   -  erstellt ein JAR-Archiv"
 	@echo " make run   -  kompiliert die Enigma, erstellt Javadok Dateien und startet den Testfile"
 	@echo " make test  -  siehe make run"
@@ -20,12 +20,11 @@ all:	doc
 run:	all
 	java enigma.TestFile
 
-gui:	all
+gui:	
 	java enigma.StartEnigmaGUI
 
 jar:	all
-	jar cvf0m  enigma.jar Manifest.txt ./enigma/*.class ./enigma/data/*.* ./enigma/engine/*.class ./enigma/exceptions/*.class ./enigma/gui/*.class ./enigma/io/*.class
-#	cd /enigma;jar cvfm  enigma.jar ../Manifest.txt *.class ./data/*.* ./engine/*.class ./exceptions/*.class ./gui/*.class ./io/*.class
+	jar cvfm  enigma.jar Manifest.txt ./enigma/*.class ./enigma/data/*.* ./enigma/engine/*.class ./enigma/exceptions/*.class ./enigma/gui/*.class ./enigma/io/*.class
 
 test:	run
 

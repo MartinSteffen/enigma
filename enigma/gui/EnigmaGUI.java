@@ -286,21 +286,90 @@ frame.getContentPane().add(toolBar8);frame.getContentPane().add(toolBar10);frame
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.requestFocus();
+
 		
 		
 		
+		LoadS.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+			;
+				if(e.getActionCommand()=="Lade Konfiguration"){
+				;
+				}
+			frame.requestFocus();
+		}});
+		SaveS.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				;
+				if(e.getActionCommand()=="Lade Konfiguration"){
+				;
+				}
+			frame.requestFocus();
+		}});
+
+
+
+
+
 		
-		
-		
-		
-		
-		
-		LoadS.addActionListener(this);
-		SaveS.addActionListener(this);
-		SaveC.addActionListener(this);
-		
-		
-		
+		SaveC.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				int[][]state;String parse,directory,file,newConfig="";int i,j;int[]test=new int[26];char[]testChar=new char[2];
+				if(e.getActionCommand()=="Speichere Konfiguration"){
+					state=enigma.getState();
+					for(i=0;i<26;i++)
+						test[i]=1;
+newConfig="-52-"+RRoller.getSelectedItem()+TRoller.getSelectedItem()+SRoller.getSelectedItem()+FRoller.getSelectedItem()+ERoller.getSelectedItem()+TRSTA.getSelectedItem()+SRSTA.getSelectedItem()+FRSTA.getSelectedItem()+TRRI.getSelectedItem()+SRRI.getSelectedItem()+FRRI.getSelectedItem()+"-";
+					try{
+						for(i=0;i<13;i++){
+							parse=PP[i].getText();
+							PP[i].setText("");
+							parse=parse.trim().toUpperCase();
+							j=parse.length();
+							testChar=parse.toCharArray();
+							if(j>1){
+if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
+System.out.println(test[(int)testChar[0]-65]+"  "+(test[(int)testChar[1]-65]));
+if((test[(int)testChar[0]-65]==1)&&(test[(int)testChar[1]-65]==1)) {
+	test[(int)testChar[0]-65]=0; test[(int)testChar[1]-65]=0;
+	PP[i].setText(testChar[0]+""+testChar[1]);
+	newConfig=newConfig+PP[i].getText();
+}
+else throw new FileException("Jeder Buchstabe darf nur mit einem Kabel angeschlossen werden! Ausnahme: z.B.: AA (keine Permutation)");
+}
+else throw new FileException("Es sind nur Klein- und Groﬂbuchstaben erlaubt! Keine Sonderzeichen. Erlaubt sind: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
+							}
+						}
+						j=0;
+						for(i=0;i<26;i++)
+							if(test[i]==0) j=1;
+						if(j==0) newConfig=newConfig+"AA-";
+							else newConfig=newConfig+"-";
+					}
+					catch (FileException err){
+						System.err.println(err.getMessage());
+						err.printStackTrace();
+						status.insert(err.getMessage()+"\n",1);
+					}
+					input.setText("");
+					output.setText("");
+					FileDialog sDiag = new FileDialog(frame,"Speichere Konfigurtion");
+					sDiag.show();
+					directory=sDiag.getDirectory();
+					file=sDiag.getFile();
+					if(file!=null){
+						try{
+							FileIO.SaveFile(newConfig,directory+file);
+						}
+						catch (IOException err){
+							System.err.println(err.getMessage());
+							err.printStackTrace();
+							status.insert(err.getMessage()+"\n",1);
+						}
+					}
+				}
+			frame.requestFocus();
+		}});
 		LoadC.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				int k,j;int[]test=new int[26];String directory,file,newConfig,first,second,third=" ";int[][]state;char[]test1=new char[5],test2=new char[5],test3=new char[5];
@@ -342,55 +411,29 @@ second=(String)FRoller.getItemAt(1);test2=second.toCharArray();third=(String)FRo
 						for(k=0;k<26;k++)
 							test[k]=1;
 						for(k=1;k<27;k++){
-//System.out.println((((char)((k+64)))+" "+((char)(k+state[6][k]+64)))+"  "+state[6][k]);
-if(state[6][k]!=0){
-	if((test[k-1]==1)&&(test[k-1+state[6][k]]==1)){
-		PP[j].setText(((char)(k+64))+""+((char)(k+state[6][k]+64)));j++;
-		test[k-1]=0;test[k-1+state[6][k]]=0;
-	}
-}
-if(j==13) i=27;
+							if(state[6][k]!=0){
+								if((test[k-1]==1)&&(test[k-1+state[6][k]]==1)){
+PP[j].setText(((char)(k+64))+""+((char)(k+state[6][k]+64)));j++;
+test[k-1]=0;test[k-1+state[6][k]]=0;
+								}
+							}
+							if(j==13) i=27;
 						}
 						for(k=j;k<13;k++)
 							PP[k].setText("");
 						input.setText("");output.setText("");
 						for(k=0;k<26;k++)
 							OutV[k].setBackground(new Color(200,200,200));
-						
-						
-						
-						
-
-
-
-
-
 					}
 					catch (IOException err){
 						System.err.println(err.getMessage());
 						err.printStackTrace();
 						status.insert(err.getMessage()+"\n",1);
 					}
-					catch (FileException err){
-						System.err.println(err.getMessage());
-						err.printStackTrace();
-						status.insert(err.getMessage()+"\n",1);
-					}
 				}
 				}
-				
-frame.requestFocus();}});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			frame.requestFocus();
+		}});
 		Exit.addActionListener(this);
 		Quit.addActionListener(this);
 		TRSTA.addActionListener(new ActionListener(){
