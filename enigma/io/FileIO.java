@@ -73,6 +73,7 @@ public static int SaveFile(String input, String filename) throws IOException{
 		for(i=(h);i<j;i++)
 			writeString=writeString+readString[i];
 		save.write(writeString);
+		save.newLine();
 		save.close();
 		return 1;
 	} 

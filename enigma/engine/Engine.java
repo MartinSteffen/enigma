@@ -36,21 +36,19 @@ if(roller[i].getExtraRot()) {
 		roller[WalzenZahl-2].setRotate(true);
 //System.out.println("");
 //System.out.println("Input:"+input);
+		
 		for(i=(WalzenZahl-2);i>0;i--){
-			start=roller[i].getStart();
-			turnOver=roller[i].getTurnover();
+			start=roller[i].getStart()+roller[i].getRing()-roller[i].getOffset();
+			turnOver=roller[i].getTurnover();	
 //System.out.println(start+":Start = TO:"+turnOver+"    "+i+":i  Rot:"+roller[i].getRotate());
 			if((start==turnOver)&&(roller[i].getRotate())&&(i>1))roller[i-1].setRotate(true);
 			else
 				{roller[i-1].setRotate(false);roller[i-1].setExtraRot(false);}
-if((roller[i].getRotate())&&(i!=WalzenZahl-2)&&(start+1==turnOver)&&(roller[i].getRotate()))roller[i-1].setExtraRot(true);
-//			if((i>=1)&&(i<=WalzenZahl-4)&&(roller[i].getRotate())&&(roller[i+2].getRotate())){System.out.println("extra rotate!");roller[i-1].setExtraRot(true);}
-			
+			if((roller[i].getRotate())&&(i!=WalzenZahl-2)&&(start+1==turnOver)&&(roller[i].getRotate()))roller[i-1].setExtraRot(true);
+			if(((start-26)==(turnOver))&&(i!=WalzenZahl-2)&&(i>=1)) {roller[i-1].setRotate(true);roller[i].setRotate(true);}
 		}
-		for(i=WalzenZahl-2;i>0;i--){
+		for(i=WalzenZahl-2;i>0;i--)
 			if(roller[i].getRotate())roller[i].rotate(false);
-//			if(roller[i].getExtraRot())roller[i].rotate(true);
-		}
 		int inp=((int)input+offset);
 		inp=inp+pb.pb(inp);
 		for(i=WalzenZahl-1;i>=0;i--)
@@ -62,6 +60,5 @@ if((roller[i].getRotate())&&(i!=WalzenZahl-2)&&(start+1==turnOver)&&(roller[i].g
 //System.out.println("Output:"+input);
 //System.out.println("");
 		return input;
-	}
-	
+	}	
 }
