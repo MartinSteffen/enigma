@@ -15,6 +15,13 @@ import enigma.engine.*;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class TestFile {
+	/**
+	 * Tests FileIO, cloning of an enigma and en-/decrypt functionality.<br>
+	 * @param File Inputfile
+	 * @param Save Outputfile
+	 * @return De-/encrypted String
+	 * @throws IOException
+	 */
 	public static String TestIO(String File, String Save) throws IOException{
 		int i,j,help=0;
 		char readString[];
@@ -51,7 +58,10 @@ enigma2.getState();
 //enigma.printState();
 		return input;
 	}
-
+	/**
+	 * First test.<br>
+	 * @param args No args handled
+	 */
 	public static void main(String[] args) {
 		try{
 //			System.out.println(TestIO("enigma/data/C543A-OJE241202-ABEFIJMNQRUV.test","enigma/data/C543A-OJE241202-ABEFIJMNQRUVtest.klartext"));

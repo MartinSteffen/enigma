@@ -19,12 +19,18 @@ public class PlugBoard {
 		int i;
 		this.PB=PB;		
 		}
+	/**
+	 * Simulates the plugboard.<br>
+	 * @param pos position of plug
+	 * @return returns permutation
+	 */
 public int readChar(int pos){
 	return PB[pos];
 	}
-public int pb(int input){
-	return PB[input];
-}
+	/**
+	 * Prints the plugboard to the screen.<br>
+	 *
+	 */
 public void printPlugBoard(){
 	int i;
 	System.out.println("The plugboard:");

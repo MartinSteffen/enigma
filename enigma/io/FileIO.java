@@ -18,11 +18,15 @@ import enigma.exceptions.*;
 public class FileIO {
 
 	/**
+		 *Saves the internal string to a file.<br>
+		 *The result is a configuration header in the first line of the file and<br>
+		 *the de-/encrypted text in the following line(s).<br>
 		 * @param input String of en-/decrypted chars
 		 * @param Filename Filename and path of file that should be exported from the enigma engine
 		 * 
-		 * @return int -1 if failure occured
-		 * 				0 if ok
+		 * @return int<br>
+		 * -1 if failure occured<br>
+		 * 0  if ok<br>
 		 * 
 		 * @throws IOException
 		 */
@@ -63,18 +67,20 @@ public static int SaveFile(String input, String filename) throws IOException{
 }
 
 /**
+	 *Loads a file with conifguration header and converts it to an internal string.<br>
 	 * @param Filename Filename and path of file that should be imported by the enigma engine
 	 * 
-	 * @return String from file. Should now be readable for the enigma engine
-	 * 					-	in first appearence:	Start of configuration
-	 * 						   second appearence:	start of roller configuration
-	 * 							third appearence:	End of  configuration
-	 * 					first part:		All numers except the last specify the number of rollers
-	 * 									The last digit: 1 no plugs attached
-	 * 												2 plugs attached
-	 * 					second part:	Roller configuration and
-	 * 									permutations of the plugboard
-	 * 					third part:		Data to en-/decrypt
+	 * @return String from file. Should now be readable for the enigma engine<br>
+	 * 					-<br>
+	 * 					in first appearence:	Start of configuration<br>
+	 * 					second appearence:		start of roller configuration<br>
+	 * 					third appearence:		End of  configuration<br>
+	 * 					first part:		Number which specify the number of rollers<br>
+	 * 									The last digit:<br>
+	 * 									1 no plugs are attached<br>
+	 * 									2 plugs are attached<br>
+	 * 					second part:	Roller configuration and permutations of the plugboard<br>
+	 * 					third part:		Data to en-/decrypt<br>
 	 * 
 	 * @throws	IOException
 	 */
@@ -144,20 +150,9 @@ public static String LoadFile(String Filename) throws IOException{
 	return input;
 }
 
-	/**
-	 * @param arr
-	 * @param subj
-	 * @param from
-	 * @param to
-	 * @return true, if subject is in array between from and to
-	 */
-private static boolean charInArray(char[] arr, char subj, int from, int to) {
-	// TODO Auto-generated method stub
-	int i;
-	for (i=from;i<=to;i++)
-	if (arr[i]==subj) return true;
-	return false;
-}
+/**
+ * Reads the configuration of a given roller and returns the permutation as int[][].<br>
+ */
 public static int[][] readRoller(String file) throws IOException{
 	int[][] diff=new int[26][2];
 	boolean minus=false;
@@ -171,7 +166,7 @@ public static int[][] readRoller(String file) throws IOException{
 			readConf = input.toCharArray();
 			minus=(readConf[0]=='-');
 			if(!minus&&(j<2)) diff[i][0]=((int)readConf[0]-48);
-			else if(!minus) diff[i][0]=(((int)readConf[0]-48)*10+((int)readConf[1]-48));//(getNumericValue(readConf[0])*10+getNumericValue(readConf[1]));
+			else if(!minus) diff[i][0]=(((int)readConf[0]-48)*10+((int)readConf[1]-48));
 			else if(j<3) diff[i][0]=((int)readConf[1]-48);
 			else diff[i][0]=(((int)readConf[1]-48)*10+((int)readConf[2]-48));
 			if (minus) diff[i][0]=diff[i][0]*(-1);

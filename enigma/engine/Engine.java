@@ -25,6 +25,11 @@ public class Engine {
 		int i=0;
 		this.pbp=pbp;
 	}
+	/**
+	 * De-/encodes a given character.<br>
+	 * @param input char from A=65 to Z=90
+	 * @return De-/encoded input
+	 */
 	public char toEnigma(char input){
 		int i,start,turnOver;
 		final int offset = -65;
@@ -47,24 +52,26 @@ public class Engine {
 		for(i=NrOfRollers-2;i>0;i--)
 			if(roller[i].getRotate())roller[i].rotate(false);
 		int inp=((int)input+offset);
-		inp=inp+pb.pb(inp);
+		inp=inp+pb.readChar(inp);
 		for(i=NrOfRollers-1;i>=0;i--)
 			inp=roller[i].Ro(inp,true);
 		for (i=1;i<=NrOfRollers-1;i++)
 			inp=roller[i].Ro(inp,false);
-		inp=inp+pb.pb(inp);
+		inp=inp+pb.readChar(inp);
 		input=(char)(inp-offset);
 		return input;
 	}
 	
 	/**
-		  @return 	int[][]
-		  			0|0=Nr. of rollers,
-					1|n=specific rollers,
-					1|0=start of roller,
-					1|1=ring of roller,
-					1|2=current pos. of roller,
-					2=Plugboard permutations. 1 if true
+	*Gets the state of this enigma.<br>
+	*	  @return 	int[][]<br>
+	*	  			0|0=Nr. of rollers,<br>
+	*				1|n=Specific rollers,<br>
+	*				1|0=Get rollername,<br>
+	*				1|1=Ring of roller,<br>
+	*				1|2=Current pos. of roller,<br>
+	*				2|0=Plugboard permutations. 1 if true<br>
+	*				2|n=The specific plugboard permutations<br>
 	*/
 	public int[][] getState(){
 		int i,j;
@@ -81,6 +88,11 @@ public class Engine {
 		this.state=state;
 		return this.state;
 	}
+	/**
+	 * Prints the state of the enigma to the screen.<br>
+	 * Be shure to execute getState() before!
+	 *
+	 */
 	public void printState(){
 		int i,j;
 		System.out.println("This enigma has "+this.state[0][0]+" rollers!");
@@ -100,6 +112,10 @@ public class Engine {
 		if(this.state[this.state[0][0]+1][0]==1){System.out.println("This enigma has plugboard permutations!");for(j=0;j<26;j++)System.out.print(" "+state[this.NrOfRollers+1][j+1]);System.out.println("");}
 		else System.out.println("This enigma has no plugboard permutations!");
 	}
+	/**
+	 * True if plugboard of this enigma contains permutations.<br> 
+	 * @return true if plubboard contains permutations
+	 */
 	public boolean ifPb(){
 		return this.pbp;
 	}

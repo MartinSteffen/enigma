@@ -61,12 +61,17 @@ public class Roller{
 		this.conf=conf;
 		this.r=r;
 	}
+	/**
+	 * Simulates this roller.<br>
+	 * @param input char that should pass this roller
+	 * @param forw in which direction is the roller passed
+	 * @return returns modified char
+	 */
 	public int Ro(int input,boolean forw){
 		int i;
 		input=input+(this.start-65);
 		if (input>25) input=input-26;
 		if (input<0) input=input+26;
-//System.out.println("Input for "+this.roller+"  = "+input+"   "+((char)(input+65))+"  Start:"+this.start+" - "+(this.start-65));
 		if(forw) input=input+this.conf[input][0];
 		else input=input-this.conf[input][1];
 		if (input>25) input=input-26;
@@ -76,51 +81,106 @@ public class Roller{
 		if (input<0) input=26+input;
 		return input;
 	}
+	/**
+	 * Simulates the rotation of this roller.<br>
+	 * @param extraRot Simulates the anomaly of the enigma
+	 */
 public void rotate(boolean extraRot){
 	this.start=(char)((int)this.start+1);
 	if ((int)(this.start-65)>25) this.start=(char)((int)this.start-26);
 	this.start1=(char)((int)this.start1+1);
 	if ((int)(this.start1-65)>25) this.start1=(char)((int)this.start1-26);
-//System.out.println("                                 Roller:"+this.roller+" has been moved");
 	if(extraRot) this.extraRot=false;
 	else this.rotate=false;
 }
+/**
+ * By calculating the start position an offset may occour which is handled here.<br>
+ * @return offset of this roller
+ */
 public int getOffset(){
 	return this.offset;
 }
+/**
+ * Sets the offset.<br>
+ *
+ */
 public void setOffset(){
 	this.offset=26;
 }
+/**
+ * Is this roller set to rotate?.<br>
+ * @return true or false
+ */
 public boolean getRotate(){
 	return this.rotate;
 }
+/**
+ * This roller will rotate in an instant.<br>
+ * @param input true or false
+ */
 public void setRotate(boolean input){
 	this.rotate=input;
 }
+/**
+ * Is this roller set to perform an extra rotation?.<br>
+ * @return true or false
+ */
 public boolean getExtraRot(){
 	return this.extraRot;
 }
+/**
+ * This roller will perform an extra rotation.<br>
+ * This handles the anomaly of the enigma.
+ * @param input true or false
+ */
 public void setExtraRot(boolean input){
 	this.extraRot=input;
 }
+/**
+ * Returns the current position of this roller.<br>
+ * @return the current position
+ */
 public int getStart(){
 	return ((int)this.start-65);
 }
+/**
+ * Returns the current position without ring modification.<br>
+ * @return the current position without ring modification
+ */
 public int getStart1(){
 	return ((int)this.start1-65);
 }
+/**
+ * Returns the position of the notch of this roller.<br>
+ * @return int for notch
+ */
 public int getNotch(){
 	return this.notch;
 }
+/**
+ * Returns the position of the turnover of this roller.<br>
+ * @return int for turnover
+ */
 public int getTurnover(){
 	return this.turnover;
 }
+/**
+ * Returns the position of the ring for this roller.<br>
+ * @return int for ring
+ */
 public int getRing(){
 	return this.ring;
 }
+/**
+ * Returns name of this roller.<br>
+ * @return name of this roller
+ */
 public char getRoller(){
 	return this.roller;
 }
+/**
+ * Prints this roller to the screen.<br>
+ */
 public void printRoller(){
 	int i;
 	for (i=0;i<26;i++)
