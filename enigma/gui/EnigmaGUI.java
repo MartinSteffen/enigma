@@ -12,7 +12,8 @@ import enigma.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
+import java.io.*;
+
 /**
  * @author jdan
  *
@@ -54,11 +55,15 @@ Dim16= new Dimension(30,1),Dim17= new Dimension(30,1),Dim18= new Dimension(30,1)
 		JMenuBar menu = new JMenuBar();
 	JMenu menuFile = new JMenu("Datei");  
 		menuFile.setMnemonic(KeyEvent.VK_D);
-		menu.add(menuFile);            
+		menu.add(menuFile);
+	JMenuItem LoadA = new JMenuItem("Lade Quelltext mit Konfiguration", KeyEvent.VK_X);
+		menuFile.add(LoadA);	
 	JMenuItem LoadS = new JMenuItem("Lade Quelltext", KeyEvent.VK_L);  
 		menuFile.add(LoadS);                                      
 	JMenuItem SaveS = new JMenuItem("Speichere Quelltext", KeyEvent.VK_S);                                      
-		menuFile.add(SaveS);                                            
+		menuFile.add(SaveS);
+	JMenuItem SaveO=new JMenuItem("Speichere Ausgabetext", KeyEvent.VK_T);
+		menuFile.add(SaveO);
 	JMenuItem LoadC = new JMenuItem("Lade Konfiguration", KeyEvent.VK_K);                                   
 		menuFile.add(LoadC);
 	JMenuItem SaveC = new JMenuItem("Speichere Konfiguration", KeyEvent.VK_A);                                      
@@ -286,80 +291,173 @@ frame.getContentPane().add(toolBar8);frame.getContentPane().add(toolBar10);frame
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.requestFocus();
-
-		
-		
-		
+		SaveO.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				String directory,file;
+				if(e.getActionCommand()=="Speichere Ausgabetext"){
+					BufferedWriter sav;
+					FileDialog sDiag = new FileDialog(frame,"Speichere Ausgabetext");
+					sDiag.show();
+						directory=sDiag.getDirectory();
+						file=sDiag.getFile();
+						if(file!=null){
+						try{
+							sav=new BufferedWriter(new FileWriter(directory+file));
+							sav.write(output.getText());
+							sav.close();
+						}
+						catch (IOException err){
+							System.err.println(err.getMessage());
+							err.printStackTrace();
+							status.insert(err.getMessage()+"\n",1);
+						}
+					}
+				}
+			frame.requestFocus();
+		}});
+		LoadA.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				char outp;int k,j,help=0;int[]test=new int[26];String directory,file,newConfig="",first,second,third=" ";int[][]state;char[]test1=new char[5],test2=new char[5],test3=new char[5],test4;
+				boolean firstS=false,secondS=false,thirdS=false;
+				if(e.getActionCommand()=="Lade Quelltext mit Konfiguration"){
+				FileDialog lDiag = new FileDialog(frame,"Lade Quelltext mit Konfigurtion");
+				lDiag.show();
+				directory=lDiag.getDirectory();
+				file=lDiag.getFile();
+				if(file!=null){
+					try{
+						newConfig=FileIO.LoadFile(directory+file);
+						enigma=BuildEnigma.BuildEnimga(newConfig,config,config);
+						state=enigma.getState();
+TRSTA.setSelectedIndex((int)state[2][2]);SRSTA.setSelectedIndex((int)state[3][2]);FRSTA.setSelectedIndex((int)state[4][2]);
+TRRI.setSelectedIndex((int)state[2][1]-1);SRRI.setSelectedIndex((int)state[3][1]-1);FRRI.setSelectedIndex((int)state[4][1]-1);
+						if(state[1][0]=='B') RRoller.setSelectedIndex(0);
+							else RRoller.setSelectedIndex(1);
+		while(!firstS||!secondS||!thirdS){
+TRoller.setSelectedIndex(0);first=(String)TRoller.getItemAt(0);test1=first.toCharArray();
+second=(String)TRoller.getItemAt(1);test2=second.toCharArray();third=(String)TRoller.getItemAt(2);test3=third.toCharArray();
+			if((char)state[2][0]==test1[0]){TRoller.setSelectedIndex(0);firstS=true;}
+				else if((char)state[2][0]==test2[0]){TRoller.setSelectedIndex(1);firstS=true;}
+				else if((char)state[2][0]==test3[0]){TRoller.setSelectedIndex(2);firstS=true;}
+SRoller.setSelectedIndex(0);first=(String)SRoller.getItemAt(0);test1=first.toCharArray();
+second=(String)SRoller.getItemAt(1);test2=second.toCharArray();third=(String)SRoller.getItemAt(2);test3=third.toCharArray();
+			if((char)state[3][0]==test1[0]){SRoller.setSelectedIndex(0);secondS=true;}
+				else if((char)state[3][0]==test2[0]){SRoller.setSelectedIndex(1);secondS=true;}
+				else if((char)state[3][0]==test3[0]){SRoller.setSelectedIndex(2);secondS=true;}
+FRoller.setSelectedIndex(0);first=(String)FRoller.getItemAt(0);test1=first.toCharArray();
+second=(String)FRoller.getItemAt(1);test2=second.toCharArray();third=(String)FRoller.getItemAt(2);test3=third.toCharArray();
+			if((char)state[4][0]==test1[0]){FRoller.setSelectedIndex(0);thirdS=true;}
+				else if((char)state[4][0]==test2[0]){FRoller.setSelectedIndex(1);thirdS=true;}
+				else if((char)state[4][0]==test3[0]){FRoller.setSelectedIndex(2);thirdS=true;}
+		}
+						if(state[5][0]=='A') ERoller.setSelectedIndex(0);
+							else ERoller.setSelectedIndex(1);
+						j=0;
+						for(k=0;k<26;k++)
+							test[k]=1;
+						for(k=1;k<27;k++){
+							if(state[6][k]!=0){
+								if((test[k-1]==1)&&(test[k-1+state[6][k]]==1)){
+PP[j].setText(((char)(k+64))+""+((char)(k+state[6][k]+64)));j++;
+test[k-1]=0;test[k-1+state[6][k]]=0;
+								}
+							}
+							if(j==13) i=27;
+						}
+						for(k=j;k<13;k++)
+							PP[k].setText("");
+						input.setText("");output.setText("");
+						for(k=0;k<26;k++)
+							OutV[k].setBackground(new Color(200,200,200));
+					}
+					catch (IOException err){
+						System.err.println(err.getMessage());
+						err.printStackTrace();
+						status.insert(err.getMessage()+"\n",1);
+					}
+					j=newConfig.length();
+					test4=new char[j];
+					test4=newConfig.toCharArray();
+					for (i=0;i<j;i++){							
+			  			if(test4[i]=='-')help++;
+			  			if (help==4) {help=i+1;i=j;}
+			  			if ((help==3)&&(!enigma.ifPb())){help=i+1;i=j;}
+					}
+					for (i=help;i<j;i++){
+						if((test4[i]>64)&&(test4[i]<91)){
+						outp=enigma.toEnigma(test4[i]);
+						input.append(""+test4[i]);
+						output.append(""+outp);
+						for(k=0;k<26;k++)
+							OutV[k].setBackground(new Color(200,200,200));
+						OutV[outp-65].setBackground(new Color(255,255,255));
+						state=enigma.getState();
+TRSTA.setSelectedIndex((int)state[2][2]);SRSTA.setSelectedIndex((int)state[3][2]);FRSTA.setSelectedIndex((int)state[4][2]);
+					}
+					else if(test4[i]==32) {input.append(""+test4[i]);output.append(""+test4[i]);} 
+						else status.insert("Fehler! "+test4[i]+" ist kein gültiges Zeichen!\n",1);
+					}					
+				}
+				}
+			frame.requestFocus();
+		}});
 		LoadS.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-			;
-				if(e.getActionCommand()=="Lade Konfiguration"){
-				;
+				String directory,file,inp;int[][]state;char outp;char[]test;int j,i,k;
+				if(e.getActionCommand()=="Lade Quelltext"){
+					BufferedReader load;
+					FileDialog lDiag = new FileDialog(frame,"Lade Quelltext");
+					lDiag.show();
+					directory=lDiag.getDirectory();
+					file=lDiag.getFile();
+					if(file!=null){
+						try{
+							load=new BufferedReader(new FileReader(directory+file));
+							while((inp=load.readLine())!=null){
+								inp=inp.trim().toUpperCase();
+								j=inp.length();
+								test=new char[j];
+								test=inp.toCharArray();
+								for(i=0;i<j;i++){
+									if((test[i]>64)&&(test[i]<91)){
+									outp=enigma.toEnigma(test[i]);
+									input.append(""+test[i]);
+									output.append(""+outp);
+									for(k=0;k<26;k++)
+										OutV[k].setBackground(new Color(200,200,200));
+									OutV[outp-65].setBackground(new Color(255,255,255));
+									state=enigma.getState();
+TRSTA.setSelectedIndex((int)state[2][2]);SRSTA.setSelectedIndex((int)state[3][2]);FRSTA.setSelectedIndex((int)state[4][2]);
+									}
+									else if(test[i]==32) {input.append(""+test[i]);output.append(""+test[i]);} 
+										else status.insert("Fehler! "+inp+" ist kein gültiges Zeichen!\n",1);
+								}
+							}
+							load.close();
+						}
+						catch (IOException err){
+							System.err.println(err.getMessage());
+							err.printStackTrace();
+							status.insert(err.getMessage()+"\n",1);
+						} 
+					}
 				}
 			frame.requestFocus();
 		}});
 		SaveS.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				;
-				if(e.getActionCommand()=="Lade Konfiguration"){
-				;
-				}
-			frame.requestFocus();
-		}});
-
-
-
-
-
-		
-		SaveC.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				int[][]state;String parse,directory,file,newConfig="";int i,j;int[]test=new int[26];char[]testChar=new char[2];
-				if(e.getActionCommand()=="Speichere Konfiguration"){
-					state=enigma.getState();
-					for(i=0;i<26;i++)
-						test[i]=1;
-newConfig="-52-"+RRoller.getSelectedItem()+TRoller.getSelectedItem()+SRoller.getSelectedItem()+FRoller.getSelectedItem()+ERoller.getSelectedItem()+TRSTA.getSelectedItem()+SRSTA.getSelectedItem()+FRSTA.getSelectedItem()+TRRI.getSelectedItem()+SRRI.getSelectedItem()+FRRI.getSelectedItem()+"-";
-					try{
-						for(i=0;i<13;i++){
-							parse=PP[i].getText();
-							PP[i].setText("");
-							parse=parse.trim().toUpperCase();
-							j=parse.length();
-							testChar=parse.toCharArray();
-							if(j>1){
-if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
-System.out.println(test[(int)testChar[0]-65]+"  "+(test[(int)testChar[1]-65]));
-if((test[(int)testChar[0]-65]==1)&&(test[(int)testChar[1]-65]==1)) {
-	test[(int)testChar[0]-65]=0; test[(int)testChar[1]-65]=0;
-	PP[i].setText(testChar[0]+""+testChar[1]);
-	newConfig=newConfig+PP[i].getText();
-}
-else throw new FileException("Jeder Buchstabe darf nur mit einem Kabel angeschlossen werden! Ausnahme: z.B.: AA (keine Permutation)");
-}
-else throw new FileException("Es sind nur Klein- und Großbuchstaben erlaubt! Keine Sonderzeichen. Erlaubt sind: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
-							}
-						}
-						j=0;
-						for(i=0;i<26;i++)
-							if(test[i]==0) j=1;
-						if(j==0) newConfig=newConfig+"AA-";
-							else newConfig=newConfig+"-";
-					}
-					catch (FileException err){
-						System.err.println(err.getMessage());
-						err.printStackTrace();
-						status.insert(err.getMessage()+"\n",1);
-					}
-					input.setText("");
-					output.setText("");
-					FileDialog sDiag = new FileDialog(frame,"Speichere Konfigurtion");
+				String directory,file;
+				if(e.getActionCommand()=="Speichere Quelltext"){
+					BufferedWriter sav;
+					FileDialog sDiag = new FileDialog(frame,"Speichere Quelltext");
 					sDiag.show();
 					directory=sDiag.getDirectory();
 					file=sDiag.getFile();
 					if(file!=null){
 						try{
-							FileIO.SaveFile(newConfig,directory+file);
+							sav=new BufferedWriter(new FileWriter(directory+file));
+							sav.write(input.getText());
+							sav.close();
 						}
 						catch (IOException err){
 							System.err.println(err.getMessage());
@@ -431,6 +529,60 @@ test[k-1]=0;test[k-1+state[6][k]]=0;
 						status.insert(err.getMessage()+"\n",1);
 					}
 				}
+				}
+			frame.requestFocus();
+		}});
+		SaveC.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				String directory,parse,file,newConfig;int[][]state;char[]testChar=new char[2];int i,j;int[]test=new int[26];
+				if(e.getActionCommand()=="Speichere Konfiguration"){
+					BufferedWriter sav;
+					FileDialog sDiag = new FileDialog(frame,"Speichere Konfiguration");
+					sDiag.show();
+					directory=sDiag.getDirectory();
+					file=sDiag.getFile();
+					for(i=0;i<26;i++)
+						test[i]=1;
+					state=enigma.getState();
+newConfig=""+RRoller.getSelectedItem()+TRoller.getSelectedItem()+SRoller.getSelectedItem()+FRoller.getSelectedItem()+ERoller.getSelectedItem()+"-"+TRSTA.getSelectedItem()+SRSTA.getSelectedItem()+FRSTA.getSelectedItem()+TRRI.getSelectedItem()+SRRI.getSelectedItem()+FRRI.getSelectedItem()+"-";
+					try{
+						for(i=0;i<13;i++){
+							parse=PP[i].getText();
+							PP[i].setText("");
+							parse=parse.trim().toUpperCase();
+							j=parse.length();
+							testChar=parse.toCharArray();
+							if(j>1){
+if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
+	if((test[(int)testChar[0]-65]==1)&&(test[(int)testChar[1]-65]==1)) {
+		test[(int)testChar[0]-65]=0; test[(int)testChar[1]-65]=0;
+		PP[i].setText(testChar[0]+""+testChar[1]);
+		newConfig=newConfig+PP[i].getText();
+	}
+	else throw new FileException("Jeder Buchstabe darf nur mit einem Kabel angeschlossen werden! Ausnahme: z.B.: AA (keine Permutation)");
+}
+else throw new FileException("Es sind nur Klein- und Großbuchstaben erlaubt! Keine Sonderzeichen. Erlaubt sind: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
+							}
+						}
+						newConfig=newConfig+"\n";
+					}
+					catch (FileException err){
+						System.err.println(err.getMessage());
+						err.printStackTrace();
+						status.insert(err.getMessage()+"\n",1);
+					}
+					if(file!=null){
+						try{
+							sav=new BufferedWriter(new FileWriter(directory+file));
+							sav.write(newConfig);
+							sav.close();
+						}
+						catch (IOException err){
+							System.err.println(err.getMessage());
+							err.printStackTrace();
+							status.insert(err.getMessage()+"\n",1);
+						}
+					}
 				}
 			frame.requestFocus();
 		}});
@@ -575,9 +727,6 @@ TRSTA.setSelectedIndex((int)state[2][2]);SRSTA.setSelectedIndex((int)state[3][2]
 					else if(inp==32) output.append(""+outp);
 					else{
 						status.insert("Fehler! "+inp+" ist kein gültiges Zeichen!\n",1);
-//
-//input.remove(arg0.getKeyLocation());
-//
 					}
 			}
 		});
