@@ -165,9 +165,9 @@ public static String LoadFile(String Filename) throws IOException{
 			}			
 			if (WalzenZahl != 0){									//Fileheader seems to exist
 				for(k=0;k<j;k++){
-					if (k==0) {Test=new FileReader("enigma/data/EnRo"+readConf[k]+".RoC");input="-"+WalzenZahl+h+"-"+readConf[k]+"";}			//tests, if roller exists and write numbers of rollers, existence of plugboard and first roller
+					if (k==0) {Test=new FileReader("enigma/data/ReRo"+readConf[k]+".RoC");input="-"+WalzenZahl+h+"-"+readConf[k]+"";}			//tests, if roller exists and write numbers of rollers, existence of plugboard and first roller
 					if ((k>0)&&(k<(WalzenZahl-1))) {Test=new FileReader("enigma/data/MeRo"+readConf[k]+".RoC");input=input+readConf[k];}		//tests, if roller exists
-					if (k==(WalzenZahl-1)) {Test=new FileReader("enigma/data/ReRo"+readConf[k]+".RoC");input=input+""+readConf[k];} 			//tests, if reflector-roller exists
+					if (k==(WalzenZahl-1)) {Test=new FileReader("enigma/data/EnRo"+readConf[k]+".RoC");input=input+""+readConf[k];} 			//tests, if reflector-roller exists
 					else if ((k<=WalzenConf)&&(k>(WalzenZahl))) input=input+readConf[k];
 					if (k>WalzenConf) {
 						for (k=(WalzenConf+1);k<j;k++){
@@ -220,11 +220,33 @@ public static String LoadFile(String Filename) throws IOException{
 	 * @param to
 	 * @return true, if subject is in array between from and to
 	 */
-	private static boolean charInArray(char[] arr, char subj, int from, int to) {
-		// TODO Auto-generated method stub
-		int i;
-		for (i=from;i<=to;i++)
-		if (arr[i]==subj) return true;
-		return false;
-	}
+private static boolean charInArray(char[] arr, char subj, int from, int to) {
+	// TODO Auto-generated method stub
+	int i;
+	for (i=from;i<=to;i++)
+	if (arr[i]==subj) return true;
+	return false;
 }
+public static int[] readRoller(String file) throws IOException{
+	int[] diff=new int[26];
+	boolean minus=false;
+	int i,j;
+	String fileName="enigma/data/"+file+".RoC",input="";
+	char readConf[];
+	BufferedReader in = new BufferedReader(new FileReader(fileName));
+	for (i=0;i<26;i++){
+		if ((input=in.readLine()) != null){
+			j=input.length();
+			readConf = input.toCharArray();
+			minus=(readConf[0]=='-');
+			if(!minus&&(j<2)) diff[i]=getNumericValue(readConf[0]);
+			else if(!minus) diff[i]=(getNumericValue(readConf[0])*10+getNumericValue(readConf[1]));
+			else if(j<3) diff[i]=getNumericValue(readConf[1]);
+			else diff[i]=(getNumericValue(readConf[1])*10+getNumericValue(readConf[2]));
+			if (minus) diff[i]=diff[i]*(-1);
+		}
+		else throw new FileException("Bad roller configuration file:"+fileName);		
+	}
+	in.close();
+	return diff;	
+}}

@@ -17,6 +17,7 @@ public class Engine {
 	public Engine(int WalzenZahl, Roller[] Roller, PlugBoard pb){
 		this.WalzenZahl=WalzenZahl;
 		int i=0;
-		System.out.println("creating engine... success");
+		System.out.println("creating engine...");
+		System.out.println("WalzenZahl:"+WalzenZahl);
 	}
 }

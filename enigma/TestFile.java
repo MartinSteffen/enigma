@@ -19,9 +19,9 @@ public class TestFile {
 	public static String TestIO() throws IOException{
 		char readString[];
 		Roller[] Roller;
-		char[] PlugArr=new char[26];
+		int[] PlugArr=new int[26];
 		PlugBoard PB=new PlugBoard(PlugArr);
-		int WalzenZahl=0,j=0,h=0,m=0,o=0;
+		int WalzenZahl=0,j=0,h=0,m=0,o=0,off2;
 		boolean plugB=false;
 		String File,Save,input="";
 				int i;
@@ -54,31 +54,37 @@ public class TestFile {
 						for (i=0;i<WalzenZahl;i++){
 System.out.print(i);
 							if ((i!=0)&&(i!=WalzenZahl-1))
-							{Roller[i]=new Roller(readString[i+o],readString[i+o+WalzenZahl-1],(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])));off=off+2;} 
-							else {if (i==0){Roller[i]=new Roller(readString[i+o]);}
-							else {Roller[i]=new Roller(readString[i+o]);}}
+							{Roller[i]=new Roller(readString[i+o],readString[i+o+WalzenZahl-1],(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])),FileIO.readRoller("MeRo"+readString[i+o]));off=off+2;} 
+							else {if (i==0){Roller[i]=new Roller(readString[i+o],readString[i+o+WalzenZahl-1],(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])),FileIO.readRoller("ReRo"+readString[i+o]));}//reflectorroller
+							else {Roller[i]=new Roller(readString[i+o],readString[i+o+WalzenZahl-1],(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])),FileIO.readRoller("EnRo"+readString[i+o]));}}//entryroller
 						}
 						if(plugB){
-							for (i=4;i<j;i++)
+							for (i=5;i<j;i++)
 							if(readString[i]=='-') {
 								off=i+1;
-								PlugArr=new char[26];
+								off2=-65;
+								PlugArr=new int[26];
 								PB = new PlugBoard(PlugArr);
-								for (h=0;h<j-off+1;h++){
-								PlugArr[h]=readString[h+off];
-								if (((off+h+1)==j-1)||(readString[off+h+1]=='-')) h=j-1;
+								for (h=0;h<j-off+1;h+=2){
+//System.out.println(h+"  "+readString[h+off]+" "+readString[h+off+1]+" "+(readString[h+off]+off2));
+									PlugArr[(readString[h+off]+off2)]=(readString[h+off+1]-readString[h+off]);
+									PlugArr[(readString[h+1+off]+off2)]=(readString[h+off]-readString[h+off+1]);
+									if (((off+h+2)==j-1)||(readString[off+h+2]=='-')) h=j-1;
 								}
 								i=j;
 							}
 						}
 				}
 				else throw new FileException("No configuration header given!");
-System.out.println("Plugboard created:");
-for(i=0;i<26;i++)
-System.out.print(PB.readChar(i));	
+for (i=0;i<WalzenZahl;i++){
+System.out.println("Printing roller:"+i);
+Roller[i].printRoller();
 System.out.println("");
+}
+PB.printPlugBoard();
 System.out.println("Test to create engine:");
-				Engine enigma = new Engine(WalzenZahl,Roller,PB);		
+				Engine enigma = new Engine(WalzenZahl,Roller,PB);
+System.out.println("... success");
 				return input;
 	}
 

@@ -13,13 +13,20 @@ package enigma.engine;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class PlugBoard {
-	private char[] PB;
+	private int[] PB;
 
-	public PlugBoard(char[] PB){
+	public PlugBoard(int[] PB){
 		int i;
 		this.PB=PB;		
 		}
-public char readChar(int pos){
+public int readChar(int pos){
 	return PB[pos];
 	}
-}
+public void printPlugBoard(){
+	int i;
+	System.out.println("The plugboard:");
+	for (i=0;i<26;i++){
+		System.out.print(" "+PB[i]);
+		}
+	System.out.println("");
+}}
