@@ -23,7 +23,7 @@ public class TestFile {
 		PlugBoard PB=new PlugBoard(PlugArr);
 		int WalzenZahl=0,j=0,h=0,m=0,o=0,off2;
 		boolean plugB=false;
-		String File,Save,input="";
+		String File,Save,input="",input2="";
 				int i;
 				File="enigma/data/ReadHeader.txt";
 				Save="enigma/data/ReadHeader.tmp";
@@ -32,6 +32,7 @@ public class TestFile {
 		  		System.out.println("^^^");
 		  		try{
 		  			input=FileIO.LoadFile(File);
+		  			input2=FileIO.LoadFile("enigma/data/Klartext.txt");
 					System.out.println("___");
 					System.out.println("Try to save: \""+Save+"\"");
 					System.out.println("^^^");
@@ -90,18 +91,16 @@ System.out.println("... success");
 				for (i=0;i<j;i++){
 					if(readString[i]=='-')help++;
 					if (help==4) {help=i+1;i=j;}
+					if ((help==3)&&(!plugB)){help=i+1;i=j;}
 //System.out.println(help+":help | i:"+i); 
 				}
-				for (i=help;i<3+help/*j*/;i++)
-					{
-//System.out.println("Testing char:"+readString[i]);
+				for (i=help;i<26+help/*j*/;i++)
 					if (readString[i]==32) ttee=ttee+readString[i];
 					else ttee=ttee+(enigma.toEnigma(readString[i]));
-					}
 				System.out.println(ttee);
+				System.out.println(input2);
 				for (i=help;i<j;i++)
 					System.out.print(readString[i]);
-//				System.out.println(enigma.toEnigma('C'));
 				System.out.println("");
 				return input;
 	}

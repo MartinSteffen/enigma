@@ -14,7 +14,7 @@ import java.io.*;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class Roller{
-	private boolean[] notch;
+	private int notch,turnover;
 	private boolean r;
 	private int[][] conf;
 	private int ring;
@@ -23,27 +23,21 @@ public class Roller{
 	private boolean rotate;
 	public Roller(char roller, char start, int ring, int[][]conf) throws IOException{
 		this.roller=roller;
-		this.start=(char)((int)start+ring);
+		this.start=(char)((int)start+ring-1);
 		if ((int)(this.start)>90) this.start=(char)((int)this.start-26);
-		this.ring=ring;
+		this.ring=ring+10;
 		this.conf=conf;
 		int i;
 		boolean rotate=false;
 		this.rotate=rotate;
-		boolean[] notch=new boolean[26];
-		for (i=0;i<=25;i++)
-		notch[0]=false;
-		if (roller=='1')
-		notch[24]=true;
-		if (roller=='2')
-		notch[12]=true;
-		if (roller=='3')
-		notch[3]=true;
-		if (roller=='4')
-		notch[17]=true;
-		if (roller=='5')
-		notch[7]=true;
-		this.notch=notch;
+		int notch=100;
+		int turnover=100;
+		if (roller=='1') {notch=24;turnover=16;} 
+		else if (roller=='2') {notch=12;turnover=4;}
+		else if (roller=='3') {notch=3;turnover=21;}
+		else if (roller=='4') {notch=17;turnover=9;}
+		else if (roller=='5') {notch=7;turnover=25;}
+		this.notch=notch; this.turnover=turnover;
 		if (roller=='A'||roller=='T'||roller=='C'||roller=='B')
 		this.start=0+65;
 System.out.println(".Roller created:"+this.roller+" "+this.start+" "+this.ring);
@@ -68,14 +62,14 @@ System.out.println(".Reflectorroller created:");
 	}
 	public int Ro(int input,boolean forw){
 		int i;
-//System.out.println(input+":input  start:"+(start-65)+" new input:"+(input+start-65)+"     "+forw+"       "+((char)(input+65))+"->"+((char)(input+start)));
-		/*if (forw)*/input=input+(this.start-65);// else input=input+(start-65);
+		input=input+(this.start-65);
+		if (input>25) input=input-26;
+//System.out.println("Input for "+this.roller+"  = "+input+"   "+((char)(input+65))+"  Start:"+this.start+" - "+(this.start-65));
+		if(forw) input=input+this.conf[input][0];
+		else input=input-this.conf[input][1];
 		if (input>25) input=input-26;
 		if (input<0) input=26+input;
-System.out.println("Input for "+this.roller+"  = "+input+"   "+((char)(input+65))+"  Start:"+this.start+" - "+(this.start-65));
-		if(forw) input=input+conf[input][0];
-		else input=input-conf[input][1];
-		if (input>25) input=input-26;
+		input=input-(this.start-65);
 		if (input<0) input=26+input;
 		return input;
 	}
@@ -93,9 +87,11 @@ public void setRotate(boolean input){
 public int getStart(){
 	return ((int)this.start-65);
 }
-public boolean getNotch(int i){
-	if (i>25) return this.notch[(i-26)];
-	else return this.notch[i];
+public int getNotch(){
+	return this.notch;
+}
+public int getTurnover(){
+	return this.turnover;
 }
 public int getRing(){
 	return this.ring;

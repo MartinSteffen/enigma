@@ -25,39 +25,50 @@ public class Engine {
 		System.out.println("WalzenZahl:"+WalzenZahl);
 	}
 	public char toEnigma(char input){
-		int i,h;
+		int i,h,hh;
 		final int offset = -65;
 		roller[WalzenZahl-2].setRotate(true);
+System.out.println("");
+System.out.println("Input:"+input);
 		for(i=(WalzenZahl-2);i>0;i--){
-			h=roller[i].getStart()-roller[i].getRing();
+			h=roller[i].getStart();//-roller[i].getRing()-1;
+			hh=roller[i-1].getStart();//-roller[i-1].getRing()-1;
 			if (h>25) h=h-26;
-			if (h<0) h=26+h;	
-System.out.println("i:"+i+" | Start-Ring:"+h+"  |Walze "+(i-1)+" hat Narbe an Pos. Start-Ring? "+roller[i-1].getNotch(h));
-			if ((roller[i-1].getNotch(h))&&(roller[i].getRotate())) roller[i-1].setRotate(true);
-			else roller[i-1].setRotate(false);
+			if (h<0) h=26+h;
+			if (hh>25) hh=hh-26;
+			if (hh<0) hh=26+hh;
+//System.out.println("i:"+i+" | Start-Ring:"+h+"  |Walze "+(i-1)+" hat Narbe an Pos. Start-Ring? "+roller[i-1].getNotch());
+//			if ((roller[i-1].getNotch(h))&&(roller[i].getRotate())) roller[i-1].setRotate(true);
+System.out.println(h+":h || hh:"+hh+"  ||  "+(roller[i-1].getNotch()+hh)+" - "+(roller[i].getTurnover()+h));
+			if(((roller[i-1].getNotch()+hh)==(h+roller[i].getRing()))&&(roller[i].getRotate()))roller[i-1].setRotate(true);
+			else
+			roller[i-1].setRotate(false);
 		}
+//roller[3].setRotate(true);
+//roller[2].setRotate(true);
+//roller[1].setRotate(true);
 		for(i=WalzenZahl-2;i>0;i--)
 			if(roller[i].getRotate())roller[i].rotate();
 		int inp=((int)input+offset);
-//System.out.println(inp+":inp | offset:"+offset+" input:"+input);
 		inp=inp+pb.pb(inp);
-System.out.println(roller[3].getStart()+":Start |5| rotate:"+roller[3].getRotate()+" || "+roller[2].getStart()+":Start |3| rotate:"+roller[2].getRotate()+" || "+roller[1].getStart()+":Start |1| rotate:"+roller[1].getRotate());
 		for(i=WalzenZahl-1;i>=0;i--){
-if(i==0)
-System.out.println("-----------------------------------"+inp);
-System.out.println("Input for "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
+//if(i==0)
+//System.out.println("-----------------------------------"+inp);
+//System.out.println("Input for "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
 			inp=roller[i].Ro(inp,true);
-System.out.println("Return of "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
+//System.out.println("Return of "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
 		}
-System.out.println("-----------------------------------"+inp);
+//System.out.println("-----------------------------------"+inp);
 		for (i=1;i<=WalzenZahl-1;i++){
 			inp=roller[i].Ro(inp,false);
-System.out.println("Return of "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
+//System.out.println("Return of "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
 		}
 //System.out.println("plubboard:"+inp);
 		inp=inp+pb.pb(inp);
 //System.out.println("plubboard:"+inp);
 		input=(char)(inp-offset);
+System.out.println("Output:"+input);
+System.out.println("");
 		return input;
 	}
 	
