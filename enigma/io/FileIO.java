@@ -29,21 +29,19 @@ public class FileIO {
 public static int SaveFile(String input, String filename) throws IOException{
 	char readString[];
 	String writeString="";
-	int j=0,i,WalzenZahl = 0,k,h=0;
+	int j=0,i,NrOfRollers = 0,k,h=0;
 	input=input.trim().toUpperCase();
 	j=input.length();
 	readString=input.toCharArray();
 	if ((readString[0]=='-')&&((readString[3]=='-')||(readString[4]=='-'))){			//Rollerconfig exist?
-			if (readString[3]=='-') {k=3;WalzenZahl = getNumericValue(readString[1]);}  //less then 10 rollers?
-			else if (readString[4]=='-') {k=4;WalzenZahl = (getNumericValue(readString[1])*10+getNumericValue(readString[2]));} //less then 100 rollers? 
+			if (readString[3]=='-') {k=3;NrOfRollers = ((int)readString[1]-48);}  //less then 10 rollers?
+			else if (readString[4]=='-') {k=4;NrOfRollers = (((int) readString[1]-48)*10+((int)readString[2]-48));} //less then 100 rollers? 
 			else return -1;																//don't want more than 99 rollers!
 				for (i=5;i<j;i++)
 				if (readString[i]=='-') h=i;											//look for end of configuration
-//			try {
 				BufferedWriter save = new BufferedWriter(new FileWriter(filename, false));
 				for (i=(k+1);i<h;i++){
-					if (i==(k+WalzenZahl+1)) writeString=writeString+"-";				//we want a standart fileheader
-//					if ((i==(WalzenZahl*4+k-5))&&(h!=0)&&(readString[k-1]!='1')) writeString=writeString+"-";
+					if (i==(k+NrOfRollers+1)) writeString=writeString+"-";				//we want a standart fileheader
 					writeString=writeString+readString[i];
 					}
 				writeString=writeString+'\n';											//end of configuration -> carriage return
@@ -52,21 +50,6 @@ public static int SaveFile(String input, String filename) throws IOException{
 				save.write(writeString);
 				save.close();
 				return 1;
-//			}
-/*			catch (IOException err) {
-				System.err.println(err.getMessage());
-				err.printStackTrace();
-				return -1;
-			}
-/*		finally {
-				if (input != null) {
-					try {save.close();}
-					catch(IOException err) {
-						System.err.println( "Close-Error:"+ err.getMessage());
-						err.printStackTrace();
-					}
-				}
-		}*/
 	}	
 	else {
 		BufferedWriter save = new BufferedWriter(new FileWriter(filename, false));
@@ -77,38 +60,6 @@ public static int SaveFile(String input, String filename) throws IOException{
 		save.close();
 		return 1;
 	} 
-/*		try {
-		
-		}
-/*	catch (IOException err) {
-	// TODO Auto-generated catch block
-	System.err.println( "Error reading line:"+err.getMessage());
-	err.printStackTrace();
-	}
-	finally {
-		if (save != null) {
-			try {save.close();}
-			catch(IOException err) {
-				System.err.println( "Close-Error:"+ err.getMessage());
-				err.printStackTrace();
-			}
-		}
-	return -1;
-	}*/
-//	return -1;
-}
-
-	/**
- * @param c
- */
-public static int getNumericValue(char c) {
-	// TODO Auto-generated method stub
-	int k=0,i;
-	for (i=48;i<=57;i++){
-		if (c==i) return k; 
-		k++;
-	}
-	return -1;
 }
 
 /**
@@ -128,13 +79,11 @@ public static int getNumericValue(char c) {
 	 * @throws	IOException
 	 */
 public static String LoadFile(String Filename) throws IOException{
-	int i=0,j,k,l,m,o=0,h=0,WalzenConf = 0,WalzenZahl = 0;
+	int i=0,j,k,l,m,o=0,h=0,RollerConf = 0,NrOfRollers = 0;
 	String line,input="";
 	FileReader Test = null;
 	char readConf[];
 	BufferedReader in = new BufferedReader(new FileReader(Filename));
-//	try {
-//		BufferedReader in = new BufferedReader(new FileReader(Filename));
 	while ((line = in.readLine()) != null){
 		line = line.trim().toUpperCase();				//only uppercase and remove white space of both ends
 		if(i!=0){
@@ -149,22 +98,22 @@ public static String LoadFile(String Filename) throws IOException{
 			readConf=line.toCharArray(); i=1;
 			for (k=0;k<j;k++){
 				if (readConf[k]=='-') {
-					if ((k<3)&&(WalzenZahl==0)){throw new FileException("Specify more rollers!");}		//min. of three rollers
+					if ((k<3)&&(NrOfRollers==0)){throw new FileException("Specify more rollers!");}		//min. of three rollers
 					else {
-						if (WalzenZahl==0) WalzenZahl = k;
-						if (WalzenZahl>99) throw new FileException("Please specify less than 100 rollers");
-						if ((WalzenZahl*4-5)<j) WalzenConf=(WalzenZahl*4-5); else WalzenConf=j-1;
-						if ((WalzenZahl==k)&&((readConf[WalzenConf]!=readConf[k]&&((WalzenZahl*4-5)<(j-1)))||((readConf[WalzenConf]==readConf[k])&&((WalzenZahl*4-5)==j))||((WalzenZahl*4-5)>j))) throw new FileException("Bad roller configuration in fileheader");
+						if (NrOfRollers==0) NrOfRollers = k;
+						if (NrOfRollers>99) throw new FileException("Please specify less than 100 rollers");
+						if ((NrOfRollers*4-5)<j) RollerConf=(NrOfRollers*4-5); else RollerConf=j-1;
+						if ((NrOfRollers==k)&&((readConf[RollerConf]!=readConf[k]&&((NrOfRollers*4-5)<(j-1)))||((readConf[RollerConf]==readConf[k])&&((NrOfRollers*4-5)==j))||((NrOfRollers*4-5)>j))) throw new FileException("Bad roller configuration in fileheader");
 						else {
-							for(m=WalzenZahl+1;m<(WalzenZahl*4-5);m++)
-								if ((m<=(WalzenZahl*2-2))&&((readConf[m]<65)||(readConf[m]>90))) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
-								else if ((m>(WalzenZahl*2-2))&&((readConf[m]>58)||(readConf[m]<47))) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
-								else if (m>(WalzenZahl*2-2)&&(o==0)) {if (((getNumericValue(readConf[m])*10)+getNumericValue(readConf[m+1]))>25) throw new FileException("Offset is too high! At position:"+m+" and:"+(m+1)); else o=1;}
+							for(m=NrOfRollers+1;m<(NrOfRollers*4-5);m++)
+								if ((m<=(NrOfRollers*2-2))&&((readConf[m]<65)||(readConf[m]>90))) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
+								else if ((m>(NrOfRollers*2-2))&&((readConf[m]>58)||(readConf[m]<47))) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
+								else if (m>(NrOfRollers*2-2)&&(o==0)) {if (((((int)readConf[m]-48)*10)+((int)readConf[m+1]-48))>25) throw new FileException("Offset is too high! At position:"+m+" and:"+(m+1)); else o=1;}
 								else if (true) o=0;
-								else if (((WalzenZahl*4-5)<j)&&(readConf[WalzenZahl*4-5]!='-')) throw new FileException("Bad roller configuration:\""+readConf[WalzenZahl*4-5]+"\" at position:"+(WalzenZahl*4-5));
+								else if (((NrOfRollers*4-5)<j)&&(readConf[NrOfRollers*4-5]!='-')) throw new FileException("Bad roller configuration:\""+readConf[NrOfRollers*4-5]+"\" at position:"+(NrOfRollers*4-5));
 							if (h!=0){
-								if ((0!=(j+4-4*WalzenZahl)%2)||(26<(j+4-(4*WalzenZahl)))) throw  new FileException("Bad stickboard! Too many plugs ("+(j+4-4*WalzenZahl)+") or one unconnected ("+((j+4-4*WalzenZahl)%2)+")! "+k+" "+WalzenZahl+" "+j+" "+(WalzenZahl*4-5));
-								else if (k==j-1) h=1;																		//no plugs attached
+								if ((0!=(j+4-4*NrOfRollers)%2)||(26<(j+4-(4*NrOfRollers)))) throw  new FileException("Bad stickboard! Too many plugs ("+(j+4-4*NrOfRollers)+") or one unconnected ("+((j+4-4*NrOfRollers)%2)+")! "+k+" "+NrOfRollers+" "+j+" "+(NrOfRollers*4-5));
+								else if (k==j-1) h=1;														//no plugs attached
 									 else h=2;																//plugs attached
 							}
 							else h=1;
@@ -172,14 +121,14 @@ public static String LoadFile(String Filename) throws IOException{
 					}
 				}
 			}			
-			if (WalzenZahl != 0){									//Fileheader seems to exist
+			if (NrOfRollers != 0){									//Fileheader seems to exist
 				for(k=0;k<j;k++){
-					if (k==0) {Test=new FileReader("enigma/data/ReRo"+readConf[k]+".RoC");input="-"+WalzenZahl+h+"-"+readConf[k]+"";}			//tests, if roller exists and write numbers of rollers, existence of plugboard and first roller
-					if ((k>0)&&(k<(WalzenZahl-1))) {Test=new FileReader("enigma/data/MeRo"+readConf[k]+".RoC");input=input+readConf[k];}		//tests, if roller exists
-					if (k==(WalzenZahl-1)) {Test=new FileReader("enigma/data/EnRo"+readConf[k]+".RoC");input=input+""+readConf[k];} 			//tests, if reflector-roller exists
-					else if ((k<=WalzenConf)&&(k>(WalzenZahl))) input=input+readConf[k];
-					if (k>WalzenConf) {
-						for (k=(WalzenConf+1);k<j;k++){
+					if (k==0) {Test=new FileReader("enigma/data/ReRo"+readConf[k]+".RoC");input="-"+NrOfRollers+h+"-"+readConf[k]+"";}			//tests if roller exists and write numbers of rollers, existence of plugboard and first roller
+					if ((k>0)&&(k<(NrOfRollers-1))) {Test=new FileReader("enigma/data/MeRo"+readConf[k]+".RoC");input=input+readConf[k];}		//tests if roller exists
+					if (k==(NrOfRollers-1)) {Test=new FileReader("enigma/data/EnRo"+readConf[k]+".RoC");input=input+""+readConf[k];} 			//tests if reflector-roller exists
+					else if ((k<=RollerConf)&&(k>(NrOfRollers))) input=input+readConf[k];
+					if (k>RollerConf) {
+						for (k=(RollerConf+1);k<j;k++){
 							if ((readConf[k]<65)||(readConf[k]>90)) throw new FileException(readConf[k]+" is bad char for plugboard at position: "+k);
 						   	input=input+readConf[k];
 						   	for (l=(k+1);l<j;l++) if (readConf[k]==readConf[l]) throw new FileException(readConf[k]+" :-: "+readConf[l]+" Only one plug per char permitted at position: "+k+" and "+l);
@@ -192,33 +141,6 @@ public static String LoadFile(String Filename) throws IOException{
 		}
 		}
 		in.close();
-//	}
-/*
-	catch (FileException err) {
-		System.err.println(err.getMessage());
-		err.printStackTrace();
-	}
-/*	catch (FileNotFoundException err) {
-	// TODO Auto-generated catch block
-	System.err.println( "File not found:"+err.getMessage());
-	err.printStackTrace();
-	throw new FileNotFoundException("TestIt");
-	}
-
-	catch (IOException err) {
-	// TODO Auto-generated catch block
-	System.err.println( "Error reading line:"+err.getMessage());
-	err.printStackTrace();
-	}
-/*	finally {
-		if (Filename != null) {
-			try {in.close();}
-			catch(IOException err) {
-				System.err.println( "Close-Error:"+ err.getMessage());
-				err.printStackTrace();
-			}
-		}		
-	}*/	
 	return input;
 }
 
@@ -248,10 +170,10 @@ public static int[][] readRoller(String file) throws IOException{
 			j=input.length();
 			readConf = input.toCharArray();
 			minus=(readConf[0]=='-');
-			if(!minus&&(j<2)) diff[i][0]=getNumericValue(readConf[0]);
-			else if(!minus) diff[i][0]=(getNumericValue(readConf[0])*10+getNumericValue(readConf[1]));
-			else if(j<3) diff[i][0]=getNumericValue(readConf[1]);
-			else diff[i][0]=(getNumericValue(readConf[1])*10+getNumericValue(readConf[2]));
+			if(!minus&&(j<2)) diff[i][0]=((int)readConf[0]-48);
+			else if(!minus) diff[i][0]=(((int)readConf[0]-48)*10+((int)readConf[1]-48));//(getNumericValue(readConf[0])*10+getNumericValue(readConf[1]));
+			else if(j<3) diff[i][0]=((int)readConf[1]-48);
+			else diff[i][0]=(((int)readConf[1]-48)*10+((int)readConf[2]-48));
 			if (minus) diff[i][0]=diff[i][0]*(-1);
 			diff[i][1]=i+diff[i][0];
 		}
