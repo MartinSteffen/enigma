@@ -18,35 +18,37 @@ public class TestFile {
 	public static String TestIO(String File, String Save) throws IOException{
 		int i,j,help=0;
 		char readString[];
+		int[][]test;
 		String input="",decoded="";
 		System.out.println("___");
 		System.out.println("Try to read: \""+File+"\"");
 		System.out.println("^^^");
 		input=FileIO.LoadFile(File);
-		System.out.println("___");
-		System.out.println("Try to save: \""+Save+"\"");
-		System.out.println("^^^");
 		Engine enigma = BuildEnigma.BuildEnimga(input,File,Save);//new Engine(NrOfRollers,Roller,PB);
-//String ttee="";
-enigma.getState();
-enigma.printState();
+test=enigma.getState();
+//enigma.printState();
+Engine enigma2=BuildEnigma.BuildEnimga(test);
+enigma2.getState();
+//enigma2.printState();
 		j=input.length();
 		readString=input.toCharArray();
 		for (i=0;i<j;i++){
 			if(readString[i]=='-')help++;
 			if (help==4) {help=i+1;i=j;}
-			if ((help==3)&&(!enigma.ifPb())){help=i+1;i=j;}
+			if ((help==3)&&(!enigma2.ifPb())){help=i+1;i=j;}
 		}
 		for (i=help;i</*2+help*/j;i++)
 			if (readString[i]==32) decoded=decoded+readString[i];
-			else decoded=decoded+(enigma.toEnigma(readString[i]));
+			else decoded=decoded+(enigma2.toEnigma(readString[i]));
 		System.out.println("Output:");
 		System.out.println(decoded);
 		System.out.println("");
+		System.out.println("___");
+		System.out.println("Try to save: \""+Save+"\"");
+		System.out.println("^^^");
 		FileIO.SaveFile(decoded,Save);
-enigma.getState();
-enigma.printState();
-System.out.println(input);
+//enigma.getState();
+//enigma.printState();
 		return input;
 	}
 

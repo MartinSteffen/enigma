@@ -67,8 +67,8 @@ public class Engine {
 					2=Plugboard permutations. 1 if true
 	*/
 	public int[][] getState(){
-		int i;
-		int[][] state=new int[this.NrOfRollers+2][3];				
+		int i,j;
+		int[][] state=new int[this.NrOfRollers+2][27];				
 		state[0][0]=this.NrOfRollers;
 		for(i=0;i<this.NrOfRollers;i++){
 			state[i+1][0]=this.roller[i].getRoller();
@@ -76,13 +76,13 @@ public class Engine {
 			if (state[i+1][1]<0)state[i+1][1]=state[i+1][1]+26;
 			state[i+1][2]=this.roller[i].getStart1();
 		}
-		if (this.pbp)state[this.NrOfRollers+1][0]=1;
+		if (this.pbp){state[this.NrOfRollers+1][0]=1;for(j=0;j<26;j++)state[this.NrOfRollers+1][j+1]=pb.readChar(j);}
 		else state[this.NrOfRollers+1][0]=0;
 		this.state=state;
 		return this.state;
 	}
 	public void printState(){
-		int i;
+		int i,j;
 		System.out.println("This enigma has "+this.state[0][0]+" rollers!");
 		System.out.print("Rollers: ");
 		for(i=1;i<=(this.state[0][0]);i++)
@@ -97,7 +97,7 @@ public class Engine {
 		for(i=2;i<(this.state[0][0]);i++)
 			System.out.print("   "+((char)(state[i][2]+65)));
 		System.out.println("");
-		if(this.state[this.state[0][0]+1][0]==1)System.out.println("This enigma has plugboard permutations!");
+		if(this.state[this.state[0][0]+1][0]==1){System.out.println("This enigma has plugboard permutations!");for(j=0;j<26;j++)System.out.print(" "+state[this.NrOfRollers+1][j+1]);System.out.println("");}
 		else System.out.println("This enigma has no plugboard permutations!");
 	}
 	public boolean ifPb(){
