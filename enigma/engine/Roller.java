@@ -20,16 +20,17 @@ public class Roller{
 	private int ring;
 	private char start;
 	private char roller;
-	private boolean rotate;
+	private boolean rotate,extraRot;
 	public Roller(char roller, char start, int ring, int[][]conf) throws IOException{
 		this.roller=roller;
 		this.start=(char)((int)start+ring-1);
 		if ((int)(this.start)>90) this.start=(char)((int)this.start-26);
-		this.ring=ring+10;
+		this.ring=ring-1;
 		this.conf=conf;
 		int i;
 		boolean rotate=false;
 		this.rotate=rotate;
+		this.extraRot=false;
 		int notch=100;
 		int turnover=100;
 		if (roller=='1') {notch=24;turnover=16;} 
@@ -40,25 +41,25 @@ public class Roller{
 		this.notch=notch; this.turnover=turnover;
 		if (roller=='A'||roller=='T'||roller=='C'||roller=='B')
 		this.start=0+65;
-System.out.println(".Roller created:"+this.roller+" "+this.start+" "+this.ring);
+//System.out.println(".Roller created:"+this.roller+" "+this.start+" "+this.ring);
 	}
 	public Roller(){						//Roller without permutations
 		int i;
 		int[] rollerArray=new int[26];
 		for (i=0;i<=25;i++)
 		rollerArray[i]=0;
-System.out.println(".Roller created:");
+//System.out.println(".Roller created:");
 	}
 	public Roller(char roller,int[][] conf){
 		this.roller=roller;
 		this.conf=conf;
-System.out.println(".Roller created:"+roller);
+//System.out.println(".Roller created:"+roller);
 	}
 	public Roller(char roller, int[][] conf, boolean r){
 		this.roller=roller;
 		this.conf=conf;
 		this.r=r;
-System.out.println(".Reflectorroller created:");
+//System.out.println(".Reflectorroller created:");
 	}
 	public int Ro(int input,boolean forw){
 		int i;
@@ -73,16 +74,24 @@ System.out.println(".Reflectorroller created:");
 		if (input<0) input=26+input;
 		return input;
 	}
-public void rotate(){
+public void rotate(boolean extraRot){
 	this.start=(char)((int)this.start+1);
-	if ((int)(this.start)>90) this.start=(char)((int)this.start-26);
-System.out.println("Roller:"+this.roller+" has been moved");
+	if ((int)(this.start-65)>25) this.start=(char)((int)this.start-26);
+//System.out.println("                                 Roller:"+this.roller+" has been moved");
+	if(extraRot) this.extraRot=false;
+	else this.rotate=false;
 }
 public boolean getRotate(){
 	return this.rotate;
 }
 public void setRotate(boolean input){
 	this.rotate=input;
+}
+public boolean getExtraRot(){
+	return this.extraRot;
+}
+public void setExtraRot(boolean input){
+	this.extraRot=input;
 }
 public int getStart(){
 	return ((int)this.start-65);

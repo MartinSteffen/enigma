@@ -21,54 +21,46 @@ public class Engine {
 		this.roller=roller;
 		this.pb=pb;
 		int i=0;
-		System.out.println("creating engine...");
-		System.out.println("WalzenZahl:"+WalzenZahl);
+//		System.out.println("creating engine...");
+//		System.out.println("WalzenZahl:"+WalzenZahl);
 	}
 	public char toEnigma(char input){
-		int i,h,hh;
+		int i,start,turnOver;
 		final int offset = -65;
+for (i=(WalzenZahl-3);i>0;i--)
+if(roller[i].getExtraRot()) {
+	roller[i].rotate(false);
+	roller[i+1].rotate(false);
+	roller[i].setExtraRot(false);
+}
 		roller[WalzenZahl-2].setRotate(true);
-System.out.println("");
-System.out.println("Input:"+input);
+//System.out.println("");
+//System.out.println("Input:"+input);
 		for(i=(WalzenZahl-2);i>0;i--){
-			h=roller[i].getStart();//-roller[i].getRing()-1;
-			hh=roller[i-1].getStart();//-roller[i-1].getRing()-1;
-			if (h>25) h=h-26;
-			if (h<0) h=26+h;
-			if (hh>25) hh=hh-26;
-			if (hh<0) hh=26+hh;
-//System.out.println("i:"+i+" | Start-Ring:"+h+"  |Walze "+(i-1)+" hat Narbe an Pos. Start-Ring? "+roller[i-1].getNotch());
-//			if ((roller[i-1].getNotch(h))&&(roller[i].getRotate())) roller[i-1].setRotate(true);
-System.out.println(h+":h || hh:"+hh+"  ||  "+(roller[i-1].getNotch()+hh)+" - "+(roller[i].getTurnover()+h));
-			if(((roller[i-1].getNotch()+hh)==(h+roller[i].getRing()))&&(roller[i].getRotate()))roller[i-1].setRotate(true);
+			start=roller[i].getStart();
+			turnOver=roller[i].getTurnover();
+//System.out.println(start+":Start = TO:"+turnOver+"    "+i+":i  Rot:"+roller[i].getRotate());
+			if((start==turnOver)&&(roller[i].getRotate())&&(i>1))roller[i-1].setRotate(true);
 			else
-			roller[i-1].setRotate(false);
+				{roller[i-1].setRotate(false);roller[i-1].setExtraRot(false);}
+if((roller[i].getRotate())&&(i!=WalzenZahl-2)&&(start+1==turnOver)&&(roller[i].getRotate()))roller[i-1].setExtraRot(true);
+//			if((i>=1)&&(i<=WalzenZahl-4)&&(roller[i].getRotate())&&(roller[i+2].getRotate())){System.out.println("extra rotate!");roller[i-1].setExtraRot(true);}
+			
 		}
-//roller[3].setRotate(true);
-//roller[2].setRotate(true);
-//roller[1].setRotate(true);
-		for(i=WalzenZahl-2;i>0;i--)
-			if(roller[i].getRotate())roller[i].rotate();
+		for(i=WalzenZahl-2;i>0;i--){
+			if(roller[i].getRotate())roller[i].rotate(false);
+//			if(roller[i].getExtraRot())roller[i].rotate(true);
+		}
 		int inp=((int)input+offset);
 		inp=inp+pb.pb(inp);
-		for(i=WalzenZahl-1;i>=0;i--){
-//if(i==0)
-//System.out.println("-----------------------------------"+inp);
-//System.out.println("Input for "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
+		for(i=WalzenZahl-1;i>=0;i--)
 			inp=roller[i].Ro(inp,true);
-//System.out.println("Return of "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
-		}
-//System.out.println("-----------------------------------"+inp);
-		for (i=1;i<=WalzenZahl-1;i++){
+		for (i=1;i<=WalzenZahl-1;i++)
 			inp=roller[i].Ro(inp,false);
-//System.out.println("Return of "+roller[i].getRoller()+"  = "+inp+"   "+((char)(inp+65))+" ");
-		}
-//System.out.println("plubboard:"+inp);
 		inp=inp+pb.pb(inp);
-//System.out.println("plubboard:"+inp);
 		input=(char)(inp-offset);
-System.out.println("Output:"+input);
-System.out.println("");
+//System.out.println("Output:"+input);
+//System.out.println("");
 		return input;
 	}
 	

@@ -51,6 +51,7 @@ public static int SaveFile(String input, String filename) throws IOException{
 					writeString=writeString+readString[i];
 				save.write(writeString);
 				save.close();
+				return 1;
 //			}
 /*			catch (IOException err) {
 				System.err.println(err.getMessage());
@@ -67,7 +68,14 @@ public static int SaveFile(String input, String filename) throws IOException{
 				}
 		}*/
 	}	
-	else return 1;
+	else {
+		BufferedWriter save = new BufferedWriter(new FileWriter(filename, false));
+		for(i=(h);i<j;i++)
+			writeString=writeString+readString[i];
+		save.write(writeString);
+		save.close();
+		return 1;
+	} 
 /*		try {
 		
 		}
@@ -86,7 +94,7 @@ public static int SaveFile(String input, String filename) throws IOException{
 		}
 	return -1;
 	}*/
-	return -1;
+//	return -1;
 }
 
 	/**
