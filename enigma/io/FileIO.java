@@ -92,7 +92,7 @@ public static int SaveFile(String input, String filename) throws IOException{
 	/**
  * @param c
  */
-private static int getNumericValue(char c) {
+public static int getNumericValue(char c) {
 	// TODO Auto-generated method stub
 	int k=0,i;
 	for (i=48;i<=57;i++){
