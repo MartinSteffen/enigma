@@ -249,5 +249,10 @@ public static int[][] readRoller(String file) throws IOException{
 		else throw new FileException("Bad roller configuration file:"+fileName);		
 	}
 	in.close();
+	int[]help=new int[26];
+	for (i=0;i<26;i++)
+		help[diff[i][1]]=diff[i][0];
+	for (i=0;i<26;i++)
+		diff[i][1]=help[i];
 	return diff;	
 }}

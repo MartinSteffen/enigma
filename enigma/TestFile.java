@@ -92,9 +92,9 @@ System.out.println("... success");
 					if (help==4) {help=i+1;i=j;}
 //System.out.println(help+":help | i:"+i); 
 				}
-				for (i=help;i<j;i++)
+				for (i=help;i<3+help/*j*/;i++)
 					{
-System.out.println("Testing char:"+readString[i]);
+//System.out.println("Testing char:"+readString[i]);
 					if (readString[i]==32) ttee=ttee+readString[i];
 					else ttee=ttee+(enigma.toEnigma(readString[i]));
 					}
