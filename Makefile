@@ -5,6 +5,7 @@ man:
 	@echo " make clean -  löscht mit make all, make run oder make doc erstellte Dateien"
 	@echo " make doc   -  erstellt Javadoc Dateien"
 	@echo " make run   -  kompiliert die Enigma, erstellt Javadok Dateien und startet den Testfile"
+	@echo " make test  -  siehe make run"
 	@echo ""
 
 all:	doc
@@ -15,6 +16,8 @@ all:	doc
 
 run:	all
 	java enigma.TestFile
+
+test:	run
 
 clean:
 	rm -f *~
