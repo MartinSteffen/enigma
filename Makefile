@@ -1,6 +1,7 @@
 
 
 
+
 all:
 	javac *.java
 
