@@ -30,12 +30,12 @@ public class TestFile {
 		  		System.out.println("^^^");
 //		  		try{
 		  			input=FileIO.LoadFile(File);
-		  			input2=FileIO.LoadFile("enigma/data/Klartext.txt");
+//		  			input2=FileIO.LoadFile("enigma/data/Klartext.txt");
 					
 					System.out.println("___");
-					System.out.println("Try to save: \""+File+"\"");
+					System.out.println("Try to save: \""+Save+"\"");
 					System.out.println("^^^");
-					System.out.println(input);
+//					System.out.println(input);
 //					FileIO.SaveFile(input,Save);
 //		  			}
 /*				catch (IOException err) {
@@ -99,9 +99,9 @@ public class TestFile {
 				System.out.println("Output:");
 				System.out.println(ttee);
 //				System.out.println(input2);
-				System.out.println("Input:");
-				for (i=help;i<j;i++)
-					System.out.print(readString[i]);
+//				System.out.println("Input:");
+//				for (i=help;i<j;i++)
+//					System.out.print(readString[i]);
 				System.out.println("");
 //				try{
 //					System.out.println("Try to Save...");
@@ -117,7 +117,7 @@ public class TestFile {
 
 	public static void main(String[] args) {
 		try{
-//			System.out.println(TestIO("enigma/data/C543A-OJE241202-ABEFIJMNQRUV.test","enigma/data/C543A-OJE241202-ABEFIJMNQRUV.testEnc"));
+//			System.out.println(TestIO("enigma/data/C543A-OJE241202-ABEFIJMNQRUV.test","enigma/data/C543A-OJE241202-ABEFIJMNQRUV.EncTest"));
 
 			TestIO("enigma/data/B123A-EGO010101.txt","enigma/data/B123A-EGO010101.klartext");
 			TestIO("enigma/data/B345A-OIL010101.txt","enigma/data/B345A-OIL010101.klartext");
@@ -127,6 +127,7 @@ public class TestFile {
 			TestIO("enigma/data/C451A-ALF160303.txt","enigma/data/C451A-ALF160303.klartext");
 			TestIO("enigma/data/C234A-EGO010101-ABEFIJMNQRUV.txt","enigma/data/C234A-EGO010101-ABEFIJMNQRUV.klartext");
 			TestIO("enigma/data/C543A-OJE241202-ABEFIJMNQRUV.txt","enigma/data/C543A-OJE241202-ABEFIJMNQRUV.klartext");
+
 		}
 		catch (IOException err){
 			System.err.println(err.getMessage());

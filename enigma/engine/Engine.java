@@ -35,8 +35,7 @@ if(roller[i].getExtraRot()) {
 }
 		roller[WalzenZahl-2].setRotate(true);
 //System.out.println("");
-//System.out.println("Input:"+input);
-		
+//System.out.println("Input:"+input);		
 		for(i=(WalzenZahl-2);i>0;i--){
 			start=roller[i].getStart()+roller[i].getRing()-roller[i].getOffset();
 			turnOver=roller[i].getTurnover();	
