@@ -24,13 +24,8 @@ gui:	all
 	java enigma.StartEnigmaGUI
 
 jar:	all
-	jar cvf enigma.jar \
-		./enigma/*.class\
-		./enigma/data/*.*\
-		./enigma/engine/*.class\
-		./enigma/exceptions/*.class\
-		./enigma/gui/*.class\
-		./enigma/io/*.class
+	jar cvf0m  enigma.jar Manifest.txt ./enigma/*.class ./enigma/data/*.* ./enigma/engine/*.class ./enigma/exceptions/*.class ./enigma/gui/*.class ./enigma/io/*.class
+#	cd /enigma;jar cvfm  enigma.jar ../Manifest.txt *.class ./data/*.* ./engine/*.class ./exceptions/*.class ./gui/*.class ./io/*.class
 
 test:	run
 
