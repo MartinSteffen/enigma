@@ -1,1 +1,2 @@
 Main-Class: enigma/StartEnigmaGUI
+Class-Path: ..

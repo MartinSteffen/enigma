@@ -342,7 +342,7 @@ second=(String)FRoller.getItemAt(1);test2=second.toCharArray();third=(String)FRo
 						for(k=0;k<26;k++)
 							test[k]=1;
 						for(k=1;k<27;k++){
-System.out.println((((char)((k+64)))+" "+((char)(k+state[6][k]+64)))+"  "+state[6][k]);
+//System.out.println((((char)((k+64)))+" "+((char)(k+state[6][k]+64)))+"  "+state[6][k]);
 if(state[6][k]!=0){
 	if((test[k-1]==1)&&(test[k-1+state[6][k]]==1)){
 		PP[j].setText(((char)(k+64))+""+((char)(k+state[6][k]+64)));j++;

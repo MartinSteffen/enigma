@@ -6,6 +6,8 @@
  */
 package enigma.io;
 import java.io.*;
+import java.util.jar.*;
+
 import enigma.exceptions.*;
 
 /**
@@ -129,9 +131,9 @@ public static String LoadFile(String Filename) throws IOException{
 			}			
 			if (NrOfRollers != 0){									//Fileheader seems to exist
 				for(k=0;k<j;k++){
-					if (k==0) {Test=new FileReader("enigma/data/ReRo"+readConf[k]+".RoC");input="-"+NrOfRollers+h+"-"+readConf[k]+"";}			//tests if roller exists and write numbers of rollers, existence of plugboard and first roller
-					if ((k>0)&&(k<(NrOfRollers-1))) {Test=new FileReader("enigma/data/MeRo"+readConf[k]+".RoC");input=input+readConf[k];}		//tests if roller exists
-					if (k==(NrOfRollers-1)) {Test=new FileReader("enigma/data/EnRo"+readConf[k]+".RoC");input=input+""+readConf[k];} 			//tests if reflector-roller exists
+					if (k==0) {/*Test=new FileReader("enigma/data/ReRo"+readConf[k]+".RoC");*/input="-"+NrOfRollers+h+"-"+readConf[k]+"";}			//tests if roller exists and write numbers of rollers, existence of plugboard and first roller
+					if ((k>0)&&(k<(NrOfRollers-1))) {/*Test=new FileReader("enigma/data/MeRo"+readConf[k]+".RoC");*/input=input+readConf[k];}		//tests if roller exists
+					if (k==(NrOfRollers-1)) {/*Test=new FileReader("enigma/data/EnRo"+readConf[k]+".RoC");*/input=input+""+readConf[k];} 			//tests if reflector-roller exists
 					else if ((k<=RollerConf)&&(k>(NrOfRollers))) input=input+readConf[k];
 					if (k>RollerConf) {
 						for (k=(RollerConf+1);k<j;k++){
@@ -150,16 +152,22 @@ public static String LoadFile(String Filename) throws IOException{
 	return input;
 }
 
+
 /**
  * Reads the configuration of a given roller and returns the permutation as int[][].<br>
  */
 public static int[][] readRoller(String file) throws IOException{
 	int[][] diff=new int[26][2];
 	boolean minus=false;
-	int i,j;
+	int i,j;BufferedReader in;
 	String fileName="enigma/data/"+file+".RoC",input="";
+	JarFile read = new JarFile("enigma.jar");
+	JarEntry inpi = read.getJarEntry(fileName);
+	InputStream inp = read.getInputStream(inpi);
 	char readConf[];
-	BufferedReader in = new BufferedReader(new FileReader(fileName));
+	if (new File("enigma/data")==null)
+		in = new BufferedReader(new FileReader(fileName));
+	else in = new BufferedReader(new InputStreamReader(inp));
 	for (i=0;i<26;i++){
 		if ((input=in.readLine()) != null){
 			j=input.length();
