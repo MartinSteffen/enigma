@@ -20,6 +20,8 @@ import java.awt.event.*;
 public class EnigmaGUI implements ActionListener{
 	public EnigmaGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
 		JFrame frame;
+		int i;
+		GridBagLayout gridbag=new GridBagLayout();
 		Dimension Dim1= new Dimension(45,1),
 		Dim2= new Dimension(160,1),
 		Dim3= new Dimension(85,1),
@@ -30,9 +32,14 @@ public class EnigmaGUI implements ActionListener{
 		Dim7= new Dimension(30,1),
 		Dim8= new Dimension(10,1),
 		Dim9= new Dimension(35,1),
-		Dim10= new Dimension(25,1);
-//		Dim11= new Dimension(140,1);
-		
+		Dim10= new Dimension(25,1),
+		Dim11= new Dimension(10,1),
+		Dim13= new Dimension(40,1),
+		Dim14= new Dimension(30,1),
+		Dim15= new Dimension(30,1),
+		Dim16= new Dimension(30,1),
+		Dim17= new Dimension(30,1),
+		Dim18= new Dimension(30,1);
 				
 		final String Roller1="Walze '1'", Roller2="Walze '2'", Roller3="Walze '3'", Roller4="Walze '4'", Roller5="Walze '5'";
 		UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -101,16 +108,19 @@ public class EnigmaGUI implements ActionListener{
 		String[] TRoSTA ={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		final JComboBox TRSTA = new JComboBox(TRoSTA);
 		toolBar2.add(new JToolBar.Separator(Dim2));
+		TRSTA.setMaximumRowCount(5);
 		toolBar2.add(TRSTA);
 	JLabel SRoST = new JLabel("GrundstellungStellungDritteWalze");
 		String[] SRoSTA ={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		final JComboBox SRSTA = new JComboBox(SRoSTA);
 		toolBar2.add(new JToolBar.Separator(Dim3));
+		SRSTA.setMaximumRowCount(5);
 		toolBar2.add(SRSTA);	
 	JLabel FRoST = new JLabel("GrundstellungStellungDritteWalze");
 		String[] FRoSTA ={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		final JComboBox FRSTA = new JComboBox(FRoSTA);
 		toolBar2.add(new JToolBar.Separator(Dim4));
+		FRSTA.setMaximumRowCount(5);
 		toolBar2.add(FRSTA);
 		toolBar2.add(new JToolBar.Separator(Dim5));
 	JLabel StartP = new JLabel("Grundstellung");
@@ -121,16 +131,19 @@ public class EnigmaGUI implements ActionListener{
 	JLabel TRoRi = new JLabel ("RingstellungDritteWalze");
 		String[] TRoRin = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26"};
 		final JComboBox TRRI = new JComboBox(TRoRin);
+		TRRI.setMaximumRowCount(3);
 		toolBar3.add(TRRI);
-	JLabel SRoRi = new JLabel ("RingstellungDritteWalze");
+	JLabel SRoRi = new JLabel ("RingstellungZweiteWalze");
 		String[] SRoRin = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26"};
 		final JComboBox SRRI = new JComboBox(TRoRin);
 		toolBar3.add(new JToolBar.Separator(Dim3));
+		SRRI.setMaximumRowCount(3);
 		toolBar3.add(SRRI);
-	JLabel FRoRi = new JLabel ("RingstellungDritteWalze");
+	JLabel FRoRi = new JLabel ("RingstellungErsteWalze");
 		String[] FRoRin = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26"};
 		final JComboBox FRRI = new JComboBox(TRoRin);
 		toolBar3.add(new JToolBar.Separator(Dim4));
+		FRRI.setMaximumRowCount(3);
 		toolBar3.add(FRRI);
 	JLabel RingP = new JLabel("Ringstellung");
 		toolBar3.add(new JToolBar.Separator(Dim5));
@@ -180,16 +193,139 @@ public class EnigmaGUI implements ActionListener{
 		JLabel PlugB = new JLabel("Steckerbrett");
 		toolBar4.add(PlugB);
 		toolBar4.add(new JToolBar.Separator(Dim10));
-						
+	JToolBar toolBar5 = new JToolBar();
+		toolBar5.setLayout(gridbag);
+		JButton Conf = new JButton("Konfiguration übernehmen");
+		Conf.setMnemonic(KeyEvent.VK_K);
+		Conf.setPreferredSize(new Dimension(200,41));
+		toolBar5.add(Conf);
+		JButton Start = new JButton("Kodieren/Dekodieren starten");
+		Start.setMnemonic(KeyEvent.VK_S);
+		Start.setPreferredSize(new Dimension(200,41));
+		toolBar5.add(Conf);
+		toolBar5.add(new JToolBar.Separator(Dim16));
+		toolBar5.add(Start);
+		
+		
+		
+		
+/*	JLabel St = new JLabel ("Verfahren");
+		String[] Sta = {"Einzelschrittverfahren","Gesamtschrittverfahren"};
+		final JComboBox ST = new JComboBox(Sta);
+		toolBar5.add(ST);
+*/		
+	JToolBar toolBar6 = new JToolBar();
+		final JButton[] OutV=new JButton[26];
+			toolBar6.add(new JToolBar.Separator(Dim11));
+		for(i=0;i<26;i++){
+			OutV[i]=new JButton((char)(i+65)+"");
+			OutV[i].setPreferredSize(new Dimension(20,20));
+			toolBar6.add(OutV[i]);
+			toolBar6.add(new JToolBar.Separator(Dim11));
+		}
+
+		OutV[0].setBackground(new Color(255,255,255));
+		
+	JToolBar toolBar7 = new JToolBar();
+		final JTextArea input=new JTextArea(6,30);
+		input.setLineWrap(true);
+		input.setAutoscrolls(true);
+		final JTextArea output=new JTextArea(6,30);
+		output.setLineWrap(true);
+		JScrollPane INP = new JScrollPane(input);
+		JScrollPane OUT = new JScrollPane(output);
+		JLabel INPL=new JLabel("Eingabe:");
+		INP.setColumnHeaderView(INPL);
+		JLabel OUTL=new JLabel("Ausgabe:");
+		OUT.setColumnHeaderView(OUTL);
+		toolBar7.add(new JToolBar.Separator(Dim13));
+		toolBar7.add(INP);
+		toolBar7.add(new JToolBar.Separator(Dim13));
+		toolBar7.add(OUT);
+		toolBar7.add(new JToolBar.Separator(Dim13));
+		
+	JToolBar toolBar8 = new JToolBar();
+	JToolBar toolBar10 = new JToolBar();
+	JToolBar toolBar11= new JToolBar();
+		final JButton[] InV=new JButton[28];
+		toolBar8.add(new JToolBar.Separator(Dim14));
+		for(i=0;i<26;i++){
+			InV[i]=new JButton((char)(i+65)+"");
+			InV[i].setPreferredSize(new Dimension(30,30));
+		}
+		toolBar8.setLayout(gridbag);
+		toolBar8.add(new JToolBar.Separator(Dim15));toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[16]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[22]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[4]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[17]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[19]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[25]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[20]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[8]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[14]);toolBar8.add(new JToolBar.Separator(Dim15));
+		toolBar8.add(InV[15]);toolBar8.add(new JToolBar.Separator(Dim15));
+		InV[26]=new JButton("<-");
+		InV[26].setPreferredSize(new Dimension(70,30));
+		toolBar8.add(InV[26]);		
+		toolBar10.setLayout(gridbag);
+		toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[0]);toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[18]);toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[3]);toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[5]);toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[6]);toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[7]);toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[9]);toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[10]);toolBar10.add(new JToolBar.Separator(Dim16));
+		toolBar10.add(InV[11]);toolBar10.add(new JToolBar.Separator(Dim16));		
+		toolBar11.setLayout(gridbag);
+		toolBar11.add(InV[24]);toolBar11.add(new JToolBar.Separator(Dim17));
+		toolBar11.add(InV[23]);toolBar11.add(new JToolBar.Separator(Dim17));
+		toolBar11.add(InV[2]);toolBar11.add(new JToolBar.Separator(Dim17));
+		toolBar11.add(InV[21]);toolBar11.add(new JToolBar.Separator(Dim17));
+		toolBar11.add(InV[1]);toolBar11.add(new JToolBar.Separator(Dim17));
+		toolBar11.add(InV[13]);toolBar11.add(new JToolBar.Separator(Dim17));
+		toolBar11.add(InV[12]);toolBar11.add(new JToolBar.Separator(Dim17));		
+		toolBar8.add(new JToolBar.Separator(Dim18));
+		InV[27]=new JButton("");
+		InV[27].setPreferredSize(new Dimension(600,30));
+		
+		final JTextArea status=new JTextArea(2,70);
+		status.setLineWrap(true);
+		JScrollPane STATUS= new JScrollPane(status);
+		JLabel STATL=new JLabel("Statusfenster:");
+		STATUS.setColumnHeaderView(STATL);
+		
+		
+		
+		toolBar1.setFloatable(false);
+		toolBar2.setFloatable(false);
+		toolBar3.setFloatable(false);
+		toolBar4.setFloatable(false);
+		toolBar5.setFloatable(false);
+		toolBar6.setFloatable(false);
+		toolBar7.setFloatable(false);
+		toolBar8.setFloatable(false);
+		toolBar10.setFloatable(false);
+		toolBar11.setFloatable(false);
 		frame.getContentPane().setLayout(new FlowLayout());
 		frame.getContentPane().add(toolBar1);
 		frame.getContentPane().add(toolBar2);
 		frame.getContentPane().add(toolBar3);
+		frame.getContentPane().add(toolBar5);
 		frame.getContentPane().add(toolBar4);
+		frame.getContentPane().add(toolBar6);
+		frame.getContentPane().add(toolBar7);
+		frame.getContentPane().add(toolBar8);
+		frame.getContentPane().add(toolBar10);
+		frame.getContentPane().add(toolBar11);
+		
+		frame.getContentPane().add(InV[27]);
+		frame.getContentPane().add(STATUS);
 		frame.setSize(800,600);
 		frame.setVisible(true);
 		frame.setResizable(false);
-		
 		
 		
 		LoadS.addActionListener(this);
@@ -214,12 +350,6 @@ public class EnigmaGUI implements ActionListener{
 					if((Roller4!=SaveSe)&&(Roller4!=SaveTh))FRoller.addItem(Roller4);
 					if((Roller5!=SaveSe)&&(Roller5!=SaveTh))FRoller.addItem(Roller5);
 					FRoller.setSelectedItem(SaveFi);
-				//	
-				//	SRoller.updateUI();
-				//	TRoller.updateUI();
-				//	SRoller.setSelectedItem(SaveSe);
-				//	TRoller.setSelectedItem(SaveTh);
-				//	
 				}}
 		});
 		SRoller.addActionListener(new ActionListener(){
@@ -256,7 +386,6 @@ public class EnigmaGUI implements ActionListener{
 		});
 		
 		}
-
 
 		public void actionPerformed(ActionEvent a) {
 		String str = a.getActionCommand();
