@@ -3,7 +3,6 @@
 
 
 
-
 all:
 	javac *.java
 
