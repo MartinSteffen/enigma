@@ -1,4 +1,11 @@
-default:	
+default:	man
+man:	
+	@echo ""
+	@echo " make all   -  kompiliert die Enigma und erstellt Javadoc Dateien"
+	@echo " make clean -  löscht mit make all, make run oder make doc erstellte Dateien"
+	@echo " make doc   -  erstellt Javadoc Dateien"
+	@echo " make run   -  kompiliert die Enigma, erstellt Javadok Dateien und startet den Testfile"
+	@echo ""
 
 all:	doc
 	javac enigma/*.java
