@@ -6,6 +6,7 @@
  */
 package enigma.engine;
 import java.io.*;
+
 /**
  * @author jdan
  *
@@ -27,8 +28,8 @@ System.out.println(".Roller created:"+roller+" "+start+" "+ring);
 	}
 	public Roller(){						//Roller without permutations
 		int i;
-		int[] rollerArray=new int[25];
-		for (i=0;i<25;i++)
+		int[] rollerArray=new int[26];
+		for (i=0;i<=25;i++)
 		rollerArray[i]=0;
 System.out.println(".Roller created:");
 	}
@@ -42,6 +43,13 @@ System.out.println(".Roller created:"+roller);
 		this.conf=conf;
 		this.r=r;
 System.out.println(".Reflectorroller created:");
+	}
+	public int Ro(int input,boolean forw){
+System.out.println(input+":input  start:"+(start-65)+" new input:"+(input+start-65));
+		input=input+start-65;
+		if (input>25) input=input-25;
+		if(forw) return input=input+conf[input];
+		else return input=input-conf[input];
 	}
 public void printRoller(){
 	int i;

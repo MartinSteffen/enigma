@@ -52,11 +52,11 @@ public class TestFile {
 					Roller=new Roller[WalzenZahl];	
 						o=4+m;int off=o+WalzenZahl*2-2;				
 						for (i=0;i<WalzenZahl;i++){
-System.out.print(i);
+System.out.print("<>"+i);
 							if ((i!=0)&&(i!=WalzenZahl-1))
 							{Roller[i]=new Roller(readString[i+o],readString[i+o+WalzenZahl-1],(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])),FileIO.readRoller("MeRo"+readString[i+o]));off=off+2;} 
-							else {if (i==0){Roller[i]=new Roller(readString[i+o],readString[i+o+WalzenZahl-1],(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])),FileIO.readRoller("ReRo"+readString[i+o]));}//reflectorroller
-							else {Roller[i]=new Roller(readString[i+o],readString[i+o+WalzenZahl-1],(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])),FileIO.readRoller("EnRo"+readString[i+o]));}}//entryroller
+							else {if (i==0){Roller[i]=new Roller(readString[i+o],'A',(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])),FileIO.readRoller("ReRo"+readString[i+o]));}//reflectorroller
+							else {Roller[i]=new Roller(readString[i+o],'A',(FileIO.getNumericValue(readString[off])*10+FileIO.getNumericValue(readString[off+1])),FileIO.readRoller("EnRo"+readString[i+o]));}}//entryroller
 						}
 						if(plugB){
 							for (i=5;i<j;i++)
@@ -85,6 +85,8 @@ PB.printPlugBoard();
 System.out.println("Test to create engine:");
 				Engine enigma = new Engine(WalzenZahl,Roller,PB);
 System.out.println("... success");
+System.out.println("Testing char 'A':");
+				System.out.println("Output:"+enigma.toEnigma('A'));
 				return input;
 	}
 
