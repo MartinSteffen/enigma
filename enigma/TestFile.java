@@ -32,19 +32,37 @@ public class TestFile {
 		System.out.println("^^^");
 		input=FileIO.LoadFile(File);
 		Engine enigma = BuildEnigma.BuildEnimga(input,File,Save);//new Engine(NrOfRollers,Roller,PB);
+
+///////////////////
+
+  		j=input.length();
+		  readString=input.toCharArray();
+		  for (i=0;i<j;i++){
+			  if(readString[i]=='-')help++;
+			  if (help==4) {help=i+1;i=j;}
+			  if ((help==3)&&(!enigma.ifPb())){help=i+1;i=j;}
+		}
+
+		for (i=help;i<j-40;i++)
+			if (readString[i]==32) decoded=decoded+readString[i];
+			else decoded=decoded+(enigma.toEnigma(readString[i]));
+
+////////////////////
+
 test=enigma.getState();
 //enigma.printState();
 Engine enigma2=BuildEnigma.BuildEnimga(test);
 enigma2.getState();
 //enigma2.printState();
-		j=input.length();
-		readString=input.toCharArray();
-		for (i=0;i<j;i++){
-			if(readString[i]=='-')help++;
-			if (help==4) {help=i+1;i=j;}
-			if ((help==3)&&(!enigma2.ifPb())){help=i+1;i=j;}
-		}
-		for (i=help;i</*2+help*/j;i++)
+//		j=input.length();
+//		readString=input.toCharArray();
+//		for (i=0;i<j;i++){
+//			if(readString[i]=='-')help++;
+//			if (help==4) {help=i+1;i=j;}
+//			if ((help==3)&&(!enigma2.ifPb())){help=i+1;i=j;}
+//		}
+
+		for (i=j-40;i</*2+help*/j;i++)
 			if (readString[i]==32) decoded=decoded+readString[i];
 			else decoded=decoded+(enigma2.toEnigma(readString[i]));
 		System.out.println("Output:");
