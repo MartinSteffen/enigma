@@ -18,9 +18,9 @@ public class TestFile {
 		String File;
 				int i;
 				File="enigma/data/ReadHeader.txt";
-				System.out.println();
+				System.out.println("___");
 		  		System.out.println("Try to read: \"enigma/data/ReadHeader.txt\"");
-		  		System.out.println();
+		  		System.out.println("^^^");
 				return FileIO.LoadFile(File);
 	}
 
