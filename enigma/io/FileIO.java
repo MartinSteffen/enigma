@@ -161,13 +161,14 @@ public static int[][] readRoller(String file) throws IOException{
 	boolean minus=false;
 	int i,j;BufferedReader in;
 	String fileName="enigma/data/"+file+".RoC",input="";
-	JarFile read = new JarFile("enigma.jar");
-	JarEntry inpi = read.getJarEntry(fileName);
-	InputStream inp = read.getInputStream(inpi);
+	if((new File("enigma.jar")).canRead()==true){
+		JarFile read = new JarFile("enigma.jar");
+		JarEntry inpi = read.getJarEntry(fileName);
+		InputStream inp = read.getInputStream(inpi);
+		in = new BufferedReader(new InputStreamReader(inp));
+	}
+	else in = new BufferedReader(new FileReader(fileName));
 	char readConf[];
-	if (new File("enigma/data")==null)
-		in = new BufferedReader(new FileReader(fileName));
-	else in = new BufferedReader(new InputStreamReader(inp));
 	for (i=0;i<26;i++){
 		if ((input=in.readLine()) != null){
 			j=input.length();
