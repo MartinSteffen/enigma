@@ -119,7 +119,7 @@ private static int getNumericValue(char c) {
 	 * @throws	IOException
 	 */
 public static String LoadFile(String Filename) throws IOException{
-	int i=0,j,k,l,m,h=0,WalzenConf = 0,WalzenZahl = 0;
+	int i=0,j,k,l,m,o=0,h=0,WalzenConf = 0,WalzenZahl = 0;
 	String line,input="";
 	FileReader Test = null;
 	char readConf[];
@@ -148,8 +148,10 @@ public static String LoadFile(String Filename) throws IOException{
 						if ((WalzenZahl==k)&&((readConf[WalzenConf]!=readConf[k]&&((WalzenZahl*4-5)<(j-1)))||((readConf[WalzenConf]==readConf[k])&& ((WalzenZahl*4-5)==j))||((WalzenZahl*4-5)>j))) throw new FileException("Bad roller configuration in fileheader");
 						else {
 							for(m=WalzenZahl+1;m<(WalzenZahl*4-5);m++)
-								if ((readConf[m]<48)||(readConf[m]>90)) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
-								else if ((readConf[m]<65)&&(readConf[m]>57)) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
+								if ((m<=(WalzenZahl*2-2))&&((readConf[m]<65)||(readConf[m]>90))) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
+								else if ((m>(WalzenZahl*2-2))&&((readConf[m]>58)||(readConf[m]<47))) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
+								else if (m>(WalzenZahl*2-2)&&(o==0)) {if (((getNumericValue(readConf[m])*10)+getNumericValue(readConf[m+1]))>25) throw new FileException("Offset is too high! At position:"+m+" and:"+(m+1)); else o=1;}
+								else if (true) o=0;
 								else if (((WalzenZahl*4-5)<j)&&(readConf[WalzenZahl*4-5]!='-')) throw new FileException("Bad roller configuration:\""+readConf[WalzenZahl*4-5]+"\" at position:"+(WalzenZahl*4-5));
 							if (h!=0){
 								if ((0!=(j+4-4*WalzenZahl)%2)||(26<(j+4-(4*WalzenZahl)))) throw  new FileException("Bad stickboard! Too many plugs ("+(j+4-4*WalzenZahl)+") or one unconnected ("+((j+4-4*WalzenZahl)%2)+")! "+k+" "+WalzenZahl+" "+j+" "+(WalzenZahl*4-5));

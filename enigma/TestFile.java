@@ -7,7 +7,7 @@
 package enigma;
 import enigma.io.*;
 import java.io.*;
-
+import enigma.engine.*;
 /**
  * @author jdan
  *
@@ -42,5 +42,6 @@ public class TestFile {
 
 	public static void main(String[] args) {
 		System.out.println(TestIO());
+		Engine test=new Engine(99);
 	}
 }
