@@ -227,8 +227,8 @@ private static boolean charInArray(char[] arr, char subj, int from, int to) {
 	if (arr[i]==subj) return true;
 	return false;
 }
-public static int[] readRoller(String file) throws IOException{
-	int[] diff=new int[26];
+public static int[][] readRoller(String file) throws IOException{
+	int[][] diff=new int[26][2];
 	boolean minus=false;
 	int i,j;
 	String fileName="enigma/data/"+file+".RoC",input="";
@@ -239,11 +239,12 @@ public static int[] readRoller(String file) throws IOException{
 			j=input.length();
 			readConf = input.toCharArray();
 			minus=(readConf[0]=='-');
-			if(!minus&&(j<2)) diff[i]=getNumericValue(readConf[0]);
-			else if(!minus) diff[i]=(getNumericValue(readConf[0])*10+getNumericValue(readConf[1]));
-			else if(j<3) diff[i]=getNumericValue(readConf[1]);
-			else diff[i]=(getNumericValue(readConf[1])*10+getNumericValue(readConf[2]));
-			if (minus) diff[i]=diff[i]*(-1);
+			if(!minus&&(j<2)) diff[i][0]=getNumericValue(readConf[0]);
+			else if(!minus) diff[i][0]=(getNumericValue(readConf[0])*10+getNumericValue(readConf[1]));
+			else if(j<3) diff[i][0]=getNumericValue(readConf[1]);
+			else diff[i][0]=(getNumericValue(readConf[1])*10+getNumericValue(readConf[2]));
+			if (minus) diff[i][0]=diff[i][0]*(-1);
+			diff[i][1]=i+diff[i][0];
 		}
 		else throw new FileException("Bad roller configuration file:"+fileName);		
 	}

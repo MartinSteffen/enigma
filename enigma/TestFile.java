@@ -85,11 +85,24 @@ PB.printPlugBoard();
 System.out.println("Test to create engine:");
 				Engine enigma = new Engine(WalzenZahl,Roller,PB);
 System.out.println("... success");
-System.out.println("Testing char 'C':");
-				String ttee="";
-				for (i=65;i<=90;i++)
-				ttee=ttee+("Output:"+(char)i+"->"+enigma.toEnigma((char)i))+'\n';
-				System.out.println(""+ttee);
+				String ttee="Output:\n";
+				int help=0;
+				for (i=0;i<j;i++){
+					if(readString[i]=='-')help++;
+					if (help==4) {help=i+1;i=j;}
+//System.out.println(help+":help | i:"+i); 
+				}
+				for (i=help;i<j;i++)
+					{
+System.out.println("Testing char:"+readString[i]);
+					if (readString[i]==32) ttee=ttee+readString[i];
+					else ttee=ttee+(enigma.toEnigma(readString[i]));
+					}
+				System.out.println(ttee);
+				for (i=help;i<j;i++)
+					System.out.print(readString[i]);
+//				System.out.println(enigma.toEnigma('C'));
+				System.out.println("");
 				return input;
 	}
 
