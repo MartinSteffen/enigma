@@ -5,10 +5,14 @@
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 package enigma.gui;
-//import enigma.exceptions.*;
+import enigma.exceptions.*;
+import enigma.engine.*;
+//import enigma.exceptions.FileException;
+import enigma.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 
 /**
@@ -18,15 +22,32 @@ import java.awt.event.*;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class EnigmaGUI implements ActionListener{
+Engine enigma;
+String config,failure;
 	public EnigmaGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
 		JFrame frame;
+		config="-52-C543AOJE241202-ABEFIJMNQRUV-";
+		failure=""+"\n";
+		try{
+		enigma=BuildEnigma.BuildEnimga(config,config,config);
+		}
+		catch (IOException err){
+			System.err.println(err.getMessage());
+			err.printStackTrace();
+			failure=err.getMessage()+"\n";
+		}
+		catch (FileException err){
+			System.err.println(err.getMessage());
+			err.printStackTrace();
+			failure=err.getMessage()+"\n";
+		}
 		int i;
 		GridBagLayout gridbag=new GridBagLayout();
-		Dimension Dim1= new Dimension(45,1),
-		Dim2= new Dimension(160,1),
-		Dim3= new Dimension(85,1),
-		Dim4= new Dimension(85,1),
-		Dim5= new Dimension(235,1),
+		Dimension Dim1= new Dimension(20,1),
+		Dim2= new Dimension(190,1),
+		Dim3= new Dimension(70,1),
+		Dim4= new Dimension(70,1),
+		Dim5= new Dimension(135,1),
 		Dim6= new Dimension(25,1),
 		Dim12= new Dimension(1,1),
 		Dim7= new Dimension(30,1),
@@ -41,7 +62,7 @@ public class EnigmaGUI implements ActionListener{
 		Dim17= new Dimension(30,1),
 		Dim18= new Dimension(30,1);
 				
-		final String Roller1="Walze '1'", Roller2="Walze '2'", Roller3="Walze '3'", Roller4="Walze '4'", Roller5="Walze '5'";
+		final String Roller1="1", Roller2="2", Roller3="3", Roller4="4", Roller5="5";
 		UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 	frame = new JFrame("EnigmaGUI");
 		frame.addWindowListener(new WindowAdapter() { public void windowClosing(WindowEvent e) {System.exit(0);}});
@@ -64,27 +85,31 @@ public class EnigmaGUI implements ActionListener{
 	JToolBar toolBar1 = new JToolBar();
 		toolBar1.setFloatable(false);
 		toolBar1.setMargin(null);
-	JLabel RRo = new JLabel("Reflektor");
-		String[] RRoS = {"Reflektor 'B'","Reflektor 'C'"};
+	JLabel RRo = new JLabel("Reflektor: ");
+		String[] RRoS = {"B","C"};
 		final JComboBox RRoller = new JComboBox(RRoS);
 		toolBar1.add(new JToolBar.Separator());
+		toolBar1.add(RRo);
 		toolBar1.add(RRoller);
-	JLabel TRo = new JLabel("DritteWalze");
+	JLabel TRo = new JLabel("3. Walze: ");
 		String[] TRoS = {Roller1,Roller2,Roller3,Roller4,Roller5};
 		final JComboBox TRoller = new JComboBox(TRoS);
 		toolBar1.add(new JToolBar.Separator(Dim1));
+		toolBar1.add(TRo);
 		toolBar1.add(TRoller);
 		TRoller.setActionCommand("DritteWalze");
-	JLabel SRo = new JLabel("ZweiteWalze");
+	JLabel SRo = new JLabel("2. Walze: ");
 		String[] SRoS = {Roller1,Roller2,Roller3,Roller4,Roller5};
 		final JComboBox SRoller = new JComboBox(SRoS);
 		toolBar1.add(new JToolBar.Separator(Dim1));
+		toolBar1.add(SRo);
 		toolBar1.add(SRoller);
 		SRoller.setActionCommand("ZweiteWalze");
-	JLabel FRo = new JLabel("ErsteWalze");
+	JLabel FRo = new JLabel("1. Walze: ");
 		String[] FRoS = {Roller1,Roller2,Roller3,Roller4,Roller5};
 		final JComboBox FRoller = new JComboBox(FRoS);
 		toolBar1.add(new JToolBar.Separator(Dim1));
+		toolBar1.add(FRo);
 		toolBar1.add(FRoller);
 		FRoller.setActionCommand("ErsteWalze");
 		SRoller.removeItem(TRoller.getSelectedItem());
@@ -93,10 +118,11 @@ public class EnigmaGUI implements ActionListener{
 		TRoller.removeItem(SRoller.getSelectedItem());
 		TRoller.removeItem(FRoller.getSelectedItem());
 		SRoller.removeItem(FRoller.getSelectedItem());
-	JLabel ERo = new JLabel("Eintrittswalze");
-		String[] ERoS = {"Eintrittswalze 'A'","Eintrittswalze 'T'"};
+	JLabel ERo = new JLabel("Eintrittswalze: ");
+		String[] ERoS = {"A","T"};
 		final JComboBox ERoller = new JComboBox(ERoS);
 		toolBar1.add(new JToolBar.Separator(Dim1));
+		toolBar1.add(ERo);
 		toolBar1.add(ERoller);
 	JButton Quit = new JButton("Verlassen");
 		Quit.setMnemonic(KeyEvent.VK_V);
@@ -151,44 +177,12 @@ public class EnigmaGUI implements ActionListener{
 		toolBar3.add(new JToolBar.Separator(Dim6));
 	JToolBar toolBar4 = new JToolBar();
 		toolBar4.add(new JToolBar.Separator(Dim7));
-		final TextField PP1 = new TextField("AA", 2);
-		toolBar4.add(PP1);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP2 = new TextField("BB", 2);
-		toolBar4.add(PP2);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP3 = new TextField("CC", 2);
-		toolBar4.add(PP3);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP4 = new TextField("DD", 2);
-		toolBar4.add(PP4);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP5 = new TextField("EE", 2);
-		toolBar4.add(PP5);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP6 = new TextField("FF", 2);
-		toolBar4.add(PP6);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP7 = new TextField("GG", 2);
-		toolBar4.add(PP7);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP8 = new TextField("HH", 2);
-		toolBar4.add(PP8);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP9 = new TextField("II", 2);
-		toolBar4.add(PP9);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP10 = new TextField("JJ", 2);
-		toolBar4.add(PP10);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP11 = new TextField("KK", 2);
-		toolBar4.add(PP11);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP12 = new TextField("LL", 2);
-		toolBar4.add(PP12);
-		toolBar4.add(new JToolBar.Separator(Dim8));
-		final TextField PP13 = new TextField("MM", 2);
-		toolBar4.add(PP13);
+		final JTextField[] PP=new JTextField[13];
+		for(i=0;i<13;i++){
+			PP[i]=new JTextField("",2);
+			toolBar4.add(PP[i]);
+			toolBar4.add(new JToolBar.Separator(Dim8));
+		}
 		toolBar4.add(new JToolBar.Separator(Dim9));
 		JLabel PlugB = new JLabel("Steckerbrett");
 		toolBar4.add(PlugB);
@@ -221,10 +215,9 @@ public class EnigmaGUI implements ActionListener{
 			OutV[i]=new JButton((char)(i+65)+"");
 			OutV[i].setPreferredSize(new Dimension(20,20));
 			toolBar6.add(OutV[i]);
+			OutV[i].setBackground(new Color(200,200,200));
 			toolBar6.add(new JToolBar.Separator(Dim11));
 		}
-
-		OutV[0].setBackground(new Color(255,255,255));
 		
 	JToolBar toolBar7 = new JToolBar();
 		final JTextArea input=new JTextArea(6,30);
@@ -296,6 +289,9 @@ public class EnigmaGUI implements ActionListener{
 		JScrollPane STATUS= new JScrollPane(status);
 		JLabel STATL=new JLabel("Statusfenster:");
 		STATUS.setColumnHeaderView(STATL);
+		status.setAutoscrolls(true);
+		status.insert(">",0);
+		status.insert(failure,1);
 		
 		
 		
@@ -334,7 +330,84 @@ public class EnigmaGUI implements ActionListener{
 		SaveC.addActionListener(this);
 		Exit.addActionListener(this);
 		Quit.addActionListener(this);
-	
+		Conf.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				String newConfig=" ",parse;int i,j;int[]test=new int[26];char[]testChar=new char[2];
+				for(i=0;i<26;i++)
+					OutV[i].setBackground(new Color(200,200,200));
+				for(i=0;i<26;i++)
+					test[i]=1;
+				if (e.getActionCommand()=="Konfiguration ¸bernehmen"){
+newConfig="-52-"+RRoller.getSelectedItem()+TRoller.getSelectedItem()+SRoller.getSelectedItem()+FRoller.getSelectedItem()+ERoller.getSelectedItem()+TRSTA.getSelectedItem()+SRSTA.getSelectedItem()+FRSTA.getSelectedItem()+TRRI.getSelectedItem()+SRRI.getSelectedItem()+FRRI.getSelectedItem()+"-";
+				
+
+					try{
+						for(i=0;i<13;i++){
+							parse=PP[i].getText();
+							PP[i].setText("");
+							parse=parse.trim().toUpperCase();
+							j=parse.length();
+							testChar=parse.toCharArray();
+							if(j>1){
+if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
+									if((test[(int)testChar[0]-65]==1)&&(test[(int)testChar[1]-65]==1)) {
+										test[(int)testChar[0]-65]=0; test[(int)testChar[1]-65]=0;
+										PP[i].setText(testChar[0]+""+testChar[1]);
+										newConfig=newConfig+PP[i].getText();
+									}
+									else throw new FileException("Jeder Buchstabe darf nur mit einem Kabel angeschlossen werden! Ausnahme: z.B.: AA (keine Permutation)");
+								}
+								else throw new FileException("Es sind nur Klein- und Groﬂbuchstaben erlaubt! Keine Sonderzeichen. Erlaubt sind: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z");
+							}
+						}
+						j=0;
+						for(i=0;i<26;i++)
+							if(test[i]==0) j=1;
+						if(j==0) newConfig=newConfig+"AA-";
+						else newConfig=newConfig+"-";
+						enigma=BuildEnigma.BuildEnimga(newConfig,config,config);
+					}
+					catch (IOException err){
+						System.err.println(err.getMessage());
+						err.printStackTrace();
+						status.insert(err.getMessage()+"\n",1);
+					}
+					catch (FileException err){
+						System.err.println(err.getMessage());
+						err.printStackTrace();
+						status.insert(err.getMessage()+"\n",1);
+					}
+					input.setText("");
+					output.setText("");
+				}
+			}
+		});
+		input.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent arg0) {}
+			public void keyReleased(KeyEvent arg0) {}
+			public void keyTyped(KeyEvent arg0) {
+				char inp,outp=' ';int i;int[][]state;
+				inp=java.lang.Character.toUpperCase(arg0.getKeyChar());
+					if((inp>64)&&(inp<91)){
+						outp=enigma.toEnigma(inp);
+						output.append(""+outp);
+						for(i=0;i<26;i++)
+							OutV[i].setBackground(new Color(200,200,200));
+						OutV[outp-65].setBackground(new Color(255,255,255));
+						state=enigma.getState();
+						TRSTA.setSelectedIndex((int)state[2][2]);
+						SRSTA.setSelectedIndex((int)state[3][2]);
+						FRSTA.setSelectedIndex((int)state[4][2]);
+					}
+					else if(inp==32) output.append(""+outp);
+					else{
+						status.insert("Fehler! "+inp+" ist kein g¸ltiges Zeichen!\n",1);
+//
+//input.remove(arg0.getKeyLocation());
+//
+					}
+			}
+		});		
 		
 		FRoller.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -384,13 +457,10 @@ public class EnigmaGUI implements ActionListener{
 					TRoller.setSelectedItem(SaveTh);
 				}}
 		});
-		
 		}
-
 		public void actionPerformed(ActionEvent a) {
-		String str = a.getActionCommand();
-		if(str.equals("Beenden")) System.exit(0);
-		if(str.equals("Verlassen")) System.exit(0);
-
-	}
+			String str = a.getActionCommand();
+			if(str.equals("Beenden")) System.exit(0);
+			if(str.equals("Verlassen")) System.exit(0);
+		}
 }
