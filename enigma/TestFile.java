@@ -6,6 +6,7 @@
  */
 package enigma;
 import enigma.io.*;
+import java.io.*;
 
 /**
  * @author jdan
@@ -15,13 +16,28 @@ import enigma.io.*;
  */
 public class TestFile {
 	public static String TestIO(){
-		String File;
+		String File,Save,input="";
 				int i;
 				File="enigma/data/ReadHeader.txt";
+				Save="enigma/data/ReadHeader.tmp";
 				System.out.println("___");
-		  		System.out.println("Try to read: \"enigma/data/ReadHeader.txt\"");
+		  		System.out.println("Try to read: \""+File+"\"");
 		  		System.out.println("^^^");
-				return FileIO.LoadFile(File);
+		  		try{
+		  			input=FileIO.LoadFile(File);
+					System.out.println("___");
+					System.out.println("Try to save: \""+Save+"\"");
+					System.out.println("^^^");
+					System.out.println(input);
+					FileIO.SaveFile(input,Save);
+		  			}
+				catch (IOException err) {
+					// TODO Auto-generated catch block
+					System.err.println( "Error reading line:"+err.getMessage());
+					err.printStackTrace();
+			}
+				
+				return input;
 	}
 
 	public static void main(String[] args) {
