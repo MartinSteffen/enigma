@@ -28,7 +28,7 @@ public class Engine {
 		int i;
 		final int offset = -65;
 		int inp=((int)input+offset);
-		inp=inp+PlugBoard.pb(inp);
+		inp=inp+pb.pb(inp);
 		for(i=WalzenZahl-1;i>=0;i--){
 		inp=roller[i].Ro(inp,true);
 System.out.println("Return of"+roller[i]+"  ="+inp);
@@ -36,10 +36,10 @@ System.out.println("Return of"+roller[i]+"  ="+inp);
 System.out.println("Halbzeit:"+inp);
 		for (i=1;i<=WalzenZahl-1;i++){
 		inp=roller[i].Ro(inp,false);
-		System.out.println("Return of"+roller[i]+"  ="+inp);
+		System.out.println("Return of "+roller[i]+"  ="+inp);
 		}
 System.out.println("plubboard:"+inp);
-		inp=inp+PlugBoard.pb(inp);
+		inp=inp+pb.pb(inp);
 System.out.println("plubboard:"+inp);
 		input=(char)(inp-offset);
 		return input;

@@ -145,7 +145,7 @@ public static String LoadFile(String Filename) throws IOException{
 						if (WalzenZahl==0) WalzenZahl = k;
 						if (WalzenZahl>99) throw new FileException("Please specify less than 100 rollers");
 						if ((WalzenZahl*4-5)<j) WalzenConf=(WalzenZahl*4-5); else WalzenConf=j-1;
-						if ((WalzenZahl==k)&&((readConf[WalzenConf]!=readConf[k]&&((WalzenZahl*4-5)<(j-1)))||((readConf[WalzenConf]==readConf[k])&& ((WalzenZahl*4-5)==j))||((WalzenZahl*4-5)>j))) throw new FileException("Bad roller configuration in fileheader");
+						if ((WalzenZahl==k)&&((readConf[WalzenConf]!=readConf[k]&&((WalzenZahl*4-5)<(j-1)))||((readConf[WalzenConf]==readConf[k])&&((WalzenZahl*4-5)==j))||((WalzenZahl*4-5)>j))) throw new FileException("Bad roller configuration in fileheader");
 						else {
 							for(m=WalzenZahl+1;m<(WalzenZahl*4-5);m++)
 								if ((m<=(WalzenZahl*2-2))&&((readConf[m]<65)||(readConf[m]>90))) throw new FileException("Bad roller configuration:\""+readConf[m]+"\" at position:"+(m+1));
@@ -156,7 +156,7 @@ public static String LoadFile(String Filename) throws IOException{
 							if (h!=0){
 								if ((0!=(j+4-4*WalzenZahl)%2)||(26<(j+4-(4*WalzenZahl)))) throw  new FileException("Bad stickboard! Too many plugs ("+(j+4-4*WalzenZahl)+") or one unconnected ("+((j+4-4*WalzenZahl)%2)+")! "+k+" "+WalzenZahl+" "+j+" "+(WalzenZahl*4-5));
 								else if (k==j-1) h=1;																		//no plugs attached
-								else h=2;																//plugs attached
+									 else h=2;																//plugs attached
 							}
 							else h=1;
 						}

@@ -45,11 +45,12 @@ System.out.println(".Roller created:"+roller);
 System.out.println(".Reflectorroller created:");
 	}
 	public int Ro(int input,boolean forw){
-System.out.println(input+":input  start:"+(start-65)+" new input:"+(input+start-65));
-		input=input+start-65;
-		if (input>25) input=input-25;
+System.out.println(input+":input  start:"+(start-65)+" new input:"+(input+start-65)+" new input back:"+(input-(start-65))+" "+start);
+		if (forw)input=input-(start-65); //else input=input+(start-65);
+		if (input>25) {input=input-26;System.out.println("Übertrag:"+input);}
+		if (input<0) {input=26+input;System.out.println("Übertrag:"+input);}
 		if(forw) return input=input+conf[input];
-		else return input=input-conf[input];
+		else return input=input+conf[input];
 	}
 public void printRoller(){
 	int i;
