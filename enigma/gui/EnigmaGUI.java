@@ -7,14 +7,12 @@
 package enigma.gui;
 import enigma.exceptions.*;
 import enigma.engine.*;
-//import enigma.exceptions.FileException;
+import enigma.io.*;
 import enigma.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-
-
 /**
  * @author jdan
  *
@@ -24,9 +22,10 @@ import java.io.IOException;
 public class EnigmaGUI implements ActionListener{
 Engine enigma;
 String config,failure;
+JFrame frame;
+int i;
 	public EnigmaGUI() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException{
-		JFrame frame;
-		config="-52-C543AOJE241202-ABEFIJMNQRUV-";
+		config="-52-B123AAAA010101-AA-";
 		failure=""+"\n";
 		try{
 		enigma=BuildEnigma.BuildEnimga(config,config,config);
@@ -41,32 +40,18 @@ String config,failure;
 			err.printStackTrace();
 			failure=err.getMessage()+"\n";
 		}
-		int i;
 		GridBagLayout gridbag=new GridBagLayout();
-		Dimension Dim1= new Dimension(20,1),
-		Dim2= new Dimension(190,1),
-		Dim3= new Dimension(70,1),
-		Dim4= new Dimension(70,1),
-		Dim5= new Dimension(135,1),
-		Dim6= new Dimension(25,1),
-		Dim12= new Dimension(1,1),
-		Dim7= new Dimension(30,1),
-		Dim8= new Dimension(10,1),
-		Dim9= new Dimension(35,1),
-		Dim10= new Dimension(25,1),
-		Dim11= new Dimension(10,1),
-		Dim13= new Dimension(40,1),
-		Dim14= new Dimension(30,1),
-		Dim15= new Dimension(30,1),
-		Dim16= new Dimension(30,1),
-		Dim17= new Dimension(30,1),
-		Dim18= new Dimension(30,1);
-				
+Dimension Dim1= new Dimension(20,1),Dim2= new Dimension(190,1),Dim3= new Dimension(70,1),
+Dim4= new Dimension(70,1),Dim5= new Dimension(135,1),Dim6= new Dimension(25,1),
+Dim12= new Dimension(1,1),Dim7= new Dimension(130,1),Dim8= new Dimension(10,1),
+Dim9= new Dimension(40,1),Dim10= new Dimension(25,1),Dim11= new Dimension(6,1),
+Dim13= new Dimension(40,1),Dim14= new Dimension(30,1),Dim15= new Dimension(30,1),
+Dim16= new Dimension(30,1),Dim17= new Dimension(30,1),Dim18= new Dimension(30,1);				
 		final String Roller1="1", Roller2="2", Roller3="3", Roller4="4", Roller5="5";
 		UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 	frame = new JFrame("EnigmaGUI");
 		frame.addWindowListener(new WindowAdapter() { public void windowClosing(WindowEvent e) {System.exit(0);}});
-	JMenuBar menu = new JMenuBar();
+		JMenuBar menu = new JMenuBar();
 	JMenu menuFile = new JMenu("Datei");  
 		menuFile.setMnemonic(KeyEvent.VK_D);
 		menu.add(menuFile);            
@@ -193,38 +178,35 @@ String config,failure;
 		Conf.setMnemonic(KeyEvent.VK_K);
 		Conf.setPreferredSize(new Dimension(200,41));
 		toolBar5.add(Conf);
-		JButton Start = new JButton("Kodieren/Dekodieren starten");
-		Start.setMnemonic(KeyEvent.VK_S);
-		Start.setPreferredSize(new Dimension(200,41));
+		JButton delOutp = new JButton("Ausgabe löschen");
+		delOutp.setMnemonic(KeyEvent.VK_A);
+		delOutp.setPreferredSize(new Dimension(200,41));
+		JButton delInp = new JButton("Eingabe löschen");
+		delInp.setMnemonic(KeyEvent.VK_E);
+		delInp.setPreferredSize(new Dimension(200,41));
+		toolBar5.add(delInp);
+		toolBar5.add(new JToolBar.Separator(Dim16));
 		toolBar5.add(Conf);
 		toolBar5.add(new JToolBar.Separator(Dim16));
-		toolBar5.add(Start);
-		
-		
-		
-		
-/*	JLabel St = new JLabel ("Verfahren");
-		String[] Sta = {"Einzelschrittverfahren","Gesamtschrittverfahren"};
-		final JComboBox ST = new JComboBox(Sta);
-		toolBar5.add(ST);
-*/		
+		toolBar5.add(delOutp);
 	JToolBar toolBar6 = new JToolBar();
+		toolBar6.setLayout(gridbag);
 		final JButton[] OutV=new JButton[26];
 			toolBar6.add(new JToolBar.Separator(Dim11));
 		for(i=0;i<26;i++){
 			OutV[i]=new JButton((char)(i+65)+"");
-			OutV[i].setPreferredSize(new Dimension(20,20));
+			OutV[i].setPreferredSize(new Dimension(24,24));
 			toolBar6.add(OutV[i]);
 			OutV[i].setBackground(new Color(200,200,200));
 			toolBar6.add(new JToolBar.Separator(Dim11));
 		}
-		
 	JToolBar toolBar7 = new JToolBar();
-		final JTextArea input=new JTextArea(6,30);
+		final JTextArea input=new JTextArea(4,30);
 		input.setLineWrap(true);
 		input.setAutoscrolls(true);
-		final JTextArea output=new JTextArea(6,30);
+		final JTextArea output=new JTextArea(4,30);
 		output.setLineWrap(true);
+		output.setEditable(false);
 		JScrollPane INP = new JScrollPane(input);
 		JScrollPane OUT = new JScrollPane(output);
 		JLabel INPL=new JLabel("Eingabe:");
@@ -236,15 +218,15 @@ String config,failure;
 		toolBar7.add(new JToolBar.Separator(Dim13));
 		toolBar7.add(OUT);
 		toolBar7.add(new JToolBar.Separator(Dim13));
-		
 	JToolBar toolBar8 = new JToolBar();
 	JToolBar toolBar10 = new JToolBar();
 	JToolBar toolBar11= new JToolBar();
-		final JButton[] InV=new JButton[28];
+		final JButton[] InV=new JButton[27];
 		toolBar8.add(new JToolBar.Separator(Dim14));
 		for(i=0;i<26;i++){
 			InV[i]=new JButton((char)(i+65)+"");
 			InV[i].setPreferredSize(new Dimension(30,30));
+			InV[i].setActionCommand(i+"");
 		}
 		toolBar8.setLayout(gridbag);
 		toolBar8.add(new JToolBar.Separator(Dim15));toolBar8.add(new JToolBar.Separator(Dim15));
@@ -258,9 +240,6 @@ String config,failure;
 		toolBar8.add(InV[8]);toolBar8.add(new JToolBar.Separator(Dim15));
 		toolBar8.add(InV[14]);toolBar8.add(new JToolBar.Separator(Dim15));
 		toolBar8.add(InV[15]);toolBar8.add(new JToolBar.Separator(Dim15));
-		InV[26]=new JButton("<-");
-		InV[26].setPreferredSize(new Dimension(70,30));
-		toolBar8.add(InV[26]);		
 		toolBar10.setLayout(gridbag);
 		toolBar10.add(new JToolBar.Separator(Dim16));
 		toolBar10.add(InV[0]);toolBar10.add(new JToolBar.Separator(Dim16));
@@ -281,9 +260,9 @@ String config,failure;
 		toolBar11.add(InV[13]);toolBar11.add(new JToolBar.Separator(Dim17));
 		toolBar11.add(InV[12]);toolBar11.add(new JToolBar.Separator(Dim17));		
 		toolBar8.add(new JToolBar.Separator(Dim18));
-		InV[27]=new JButton("");
-		InV[27].setPreferredSize(new Dimension(600,30));
-		
+		InV[26]=new JButton("");
+		InV[26].setActionCommand(" ");
+		InV[26].setPreferredSize(new Dimension(600,30));
 		final JTextArea status=new JTextArea(2,70);
 		status.setLineWrap(true);
 		JScrollPane STATUS= new JScrollPane(status);
@@ -292,44 +271,188 @@ String config,failure;
 		status.setAutoscrolls(true);
 		status.insert(">",0);
 		status.insert(failure,1);
-		
-		
-		
-		toolBar1.setFloatable(false);
-		toolBar2.setFloatable(false);
-		toolBar3.setFloatable(false);
-		toolBar4.setFloatable(false);
-		toolBar5.setFloatable(false);
-		toolBar6.setFloatable(false);
-		toolBar7.setFloatable(false);
-		toolBar8.setFloatable(false);
-		toolBar10.setFloatable(false);
+		status.setEditable(false);
+toolBar1.setFloatable(false);toolBar2.setFloatable(false);toolBar3.setFloatable(false);
+toolBar4.setFloatable(false);toolBar5.setFloatable(false);toolBar6.setFloatable(false);
+toolBar7.setFloatable(false);toolBar8.setFloatable(false);toolBar10.setFloatable(false);
 		toolBar11.setFloatable(false);
-		frame.getContentPane().setLayout(new FlowLayout());
-		frame.getContentPane().add(toolBar1);
-		frame.getContentPane().add(toolBar2);
-		frame.getContentPane().add(toolBar3);
-		frame.getContentPane().add(toolBar5);
-		frame.getContentPane().add(toolBar4);
-		frame.getContentPane().add(toolBar6);
-		frame.getContentPane().add(toolBar7);
-		frame.getContentPane().add(toolBar8);
-		frame.getContentPane().add(toolBar10);
-		frame.getContentPane().add(toolBar11);
-		
-		frame.getContentPane().add(InV[27]);
+frame.getContentPane().setLayout(new FlowLayout());frame.getContentPane().add(toolBar1);
+frame.getContentPane().add(toolBar2);frame.getContentPane().add(toolBar3);frame.getContentPane().add(toolBar5);
+frame.getContentPane().add(toolBar4);frame.getContentPane().add(toolBar6);frame.getContentPane().add(toolBar7);
+frame.getContentPane().add(toolBar8);frame.getContentPane().add(toolBar10);frame.getContentPane().add(toolBar11);
+		frame.getContentPane().add(InV[26]);
 		frame.getContentPane().add(STATUS);
 		frame.setSize(800,600);
 		frame.setVisible(true);
 		frame.setResizable(false);
+		frame.requestFocus();
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		LoadS.addActionListener(this);
 		SaveS.addActionListener(this);
-		LoadC.addActionListener(this);
 		SaveC.addActionListener(this);
+		
+		
+		
+		LoadC.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				int k,j;int[]test=new int[26];String directory,file,newConfig,first,second,third=" ";int[][]state;char[]test1=new char[5],test2=new char[5],test3=new char[5];
+				boolean firstS=false,secondS=false,thirdS=false;
+				if(e.getActionCommand()=="Lade Konfiguration"){
+				FileDialog lDiag = new FileDialog(frame,"Lade Konfigurtion");
+				lDiag.show();
+				directory=lDiag.getDirectory();
+				file=lDiag.getFile();
+				if(file!=null){
+					try{
+						newConfig=FileIO.LoadFile(directory+file);
+						enigma=BuildEnigma.BuildEnimga(newConfig,config,config);
+						state=enigma.getState();
+TRSTA.setSelectedIndex((int)state[2][2]);SRSTA.setSelectedIndex((int)state[3][2]);FRSTA.setSelectedIndex((int)state[4][2]);
+TRRI.setSelectedIndex((int)state[2][1]-1);SRRI.setSelectedIndex((int)state[3][1]-1);FRRI.setSelectedIndex((int)state[4][1]-1);
+						if(state[1][0]=='B') RRoller.setSelectedIndex(0);
+							else RRoller.setSelectedIndex(1);
+		while(!firstS||!secondS||!thirdS){
+TRoller.setSelectedIndex(0);first=(String)TRoller.getItemAt(0);test1=first.toCharArray();
+second=(String)TRoller.getItemAt(1);test2=second.toCharArray();third=(String)TRoller.getItemAt(2);test3=third.toCharArray();
+			if((char)state[2][0]==test1[0]){TRoller.setSelectedIndex(0);firstS=true;}
+				else if((char)state[2][0]==test2[0]){TRoller.setSelectedIndex(1);firstS=true;}
+				else if((char)state[2][0]==test3[0]){TRoller.setSelectedIndex(2);firstS=true;}
+SRoller.setSelectedIndex(0);first=(String)SRoller.getItemAt(0);test1=first.toCharArray();
+second=(String)SRoller.getItemAt(1);test2=second.toCharArray();third=(String)SRoller.getItemAt(2);test3=third.toCharArray();
+			if((char)state[3][0]==test1[0]){SRoller.setSelectedIndex(0);secondS=true;}
+				else if((char)state[3][0]==test2[0]){SRoller.setSelectedIndex(1);secondS=true;}
+				else if((char)state[3][0]==test3[0]){SRoller.setSelectedIndex(2);secondS=true;}
+FRoller.setSelectedIndex(0);first=(String)FRoller.getItemAt(0);test1=first.toCharArray();
+second=(String)FRoller.getItemAt(1);test2=second.toCharArray();third=(String)FRoller.getItemAt(2);test3=third.toCharArray();
+			if((char)state[4][0]==test1[0]){FRoller.setSelectedIndex(0);thirdS=true;}
+				else if((char)state[4][0]==test2[0]){FRoller.setSelectedIndex(1);thirdS=true;}
+				else if((char)state[4][0]==test3[0]){FRoller.setSelectedIndex(2);thirdS=true;}
+		}
+						if(state[5][0]=='A') ERoller.setSelectedIndex(0);
+							else ERoller.setSelectedIndex(1);
+						j=0;
+						for(k=0;k<26;k++)
+							test[k]=1;
+						for(k=1;k<27;k++){
+System.out.println((((char)((k+64)))+" "+((char)(k+state[6][k]+64)))+"  "+state[6][k]);
+if(state[6][k]!=0){
+	if((test[k-1]==1)&&(test[k-1+state[6][k]]==1)){
+		PP[j].setText(((char)(k+64))+""+((char)(k+state[6][k]+64)));j++;
+		test[k-1]=0;test[k-1+state[6][k]]=0;
+	}
+}
+if(j==13) i=27;
+						}
+						for(k=j;k<13;k++)
+							PP[k].setText("");
+						input.setText("");output.setText("");
+						for(k=0;k<26;k++)
+							OutV[k].setBackground(new Color(200,200,200));
+						
+						
+						
+						
+
+
+
+
+
+					}
+					catch (IOException err){
+						System.err.println(err.getMessage());
+						err.printStackTrace();
+						status.insert(err.getMessage()+"\n",1);
+					}
+					catch (FileException err){
+						System.err.println(err.getMessage());
+						err.printStackTrace();
+						status.insert(err.getMessage()+"\n",1);
+					}
+				}
+				}
+				
+frame.requestFocus();}});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		Exit.addActionListener(this);
 		Quit.addActionListener(this);
+		TRSTA.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			frame.requestFocus();
+			}
+		});
+		SRSTA.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			frame.requestFocus();
+			}
+		});
+		FRSTA.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			frame.requestFocus();
+			}
+		});
+		delInp.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if("Eingabe löschen"==e.getActionCommand()) input.setText("");
+				frame.requestFocus();
+			}
+		});
+		delOutp.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if("Ausgabe löschen"==e.getActionCommand())	output.setText("");
+				frame.requestFocus();
+			}
+		});
+		for(i=0;i<26;i++){
+			OutV[i].addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					frame.requestFocus();
+			}});}
+		for(i=0;i<26;i++){
+			InV[i].addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					char[]parse=new char[2];char parse3,outp;String parse2;int[][]state;
+					parse2=e.getActionCommand();
+					if(parse2.length()<2)
+						parse=('0'+e.getActionCommand()).toCharArray();
+					else parse=e.getActionCommand().toCharArray();
+					parse3=(char)((int)(parse[0]-48)*10+((int)(parse[1]-48))+65);
+					input.append(parse3+"");
+					outp=enigma.toEnigma(parse3);
+					output.append(""+outp);
+					for(i=0;i<26;i++)
+						OutV[i].setBackground(new Color(200,200,200));
+					OutV[outp-65].setBackground(new Color(255,255,255));
+					state=enigma.getState();
+TRSTA.setSelectedIndex((int)state[2][2]);SRSTA.setSelectedIndex((int)state[3][2]);FRSTA.setSelectedIndex((int)state[4][2]);
+					frame.requestFocus();
+				}
+			});
+		}
+		InV[26].addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(" "==e.getActionCommand()){
+					input.append(" ");
+					output.append(" ");
+					frame.requestFocus();
+		}}});
 		Conf.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String newConfig=" ",parse;int i,j;int[]test=new int[26];char[]testChar=new char[2];
@@ -339,8 +462,6 @@ String config,failure;
 					test[i]=1;
 				if (e.getActionCommand()=="Konfiguration übernehmen"){
 newConfig="-52-"+RRoller.getSelectedItem()+TRoller.getSelectedItem()+SRoller.getSelectedItem()+FRoller.getSelectedItem()+ERoller.getSelectedItem()+TRSTA.getSelectedItem()+SRSTA.getSelectedItem()+FRSTA.getSelectedItem()+TRRI.getSelectedItem()+SRRI.getSelectedItem()+FRRI.getSelectedItem()+"-";
-				
-
 					try{
 						for(i=0;i<13;i++){
 							parse=PP[i].getText();
@@ -379,8 +500,19 @@ if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
 					}
 					input.setText("");
 					output.setText("");
+					frame.requestFocus();
 				}
 			}
+		});
+		output.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent arg0) {}
+			public void keyReleased(KeyEvent arg0) {}
+			public void keyTyped(KeyEvent arg0) {frame.requestFocus();}
+		});
+		status.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent arg0) {}
+			public void keyReleased(KeyEvent arg0) {}
+			public void keyTyped(KeyEvent arg0) {frame.requestFocus();}
 		});
 		input.addKeyListener(new KeyListener(){
 			public void keyPressed(KeyEvent arg0) {}
@@ -395,9 +527,7 @@ if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
 							OutV[i].setBackground(new Color(200,200,200));
 						OutV[outp-65].setBackground(new Color(255,255,255));
 						state=enigma.getState();
-						TRSTA.setSelectedIndex((int)state[2][2]);
-						SRSTA.setSelectedIndex((int)state[3][2]);
-						FRSTA.setSelectedIndex((int)state[4][2]);
+TRSTA.setSelectedIndex((int)state[2][2]);SRSTA.setSelectedIndex((int)state[3][2]);FRSTA.setSelectedIndex((int)state[4][2]);
 					}
 					else if(inp==32) output.append(""+outp);
 					else{
@@ -407,8 +537,39 @@ if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
 //
 					}
 			}
-		});		
-		
+		});
+		frame.addKeyListener(new KeyListener(){
+					public void keyPressed(KeyEvent arg0) {}
+					public void keyReleased(KeyEvent arg0) {}
+					public void keyTyped(KeyEvent arg0) {
+						char inp,outp=' ';int i;int[][]state;String test="";
+						if(arg0.getModifiers()==8);
+						else{
+						inp=java.lang.Character.toUpperCase(arg0.getKeyChar());
+							if((inp>64)&&(inp<91)){
+								outp=enigma.toEnigma(inp);
+								output.append(""+outp);
+								input.append(""+inp);
+								for(i=0;i<26;i++)
+									OutV[i].setBackground(new Color(200,200,200));
+								OutV[outp-65].setBackground(new Color(255,255,255));
+								state=enigma.getState();
+TRSTA.setSelectedIndex((int)state[2][2]);SRSTA.setSelectedIndex((int)state[3][2]);FRSTA.setSelectedIndex((int)state[4][2]);
+							}
+							else if(inp==32) {output.append(""+outp);input.append(""+outp);} 
+							else{
+								status.insert("Fehler! "+inp+" ist kein gültiges Zeichen!\n",1);
+							}
+					}
+				}});
+		RRoller.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				frame.requestFocus();
+		}});
+		ERoller.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				frame.requestFocus();
+		}});
 		FRoller.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String SaveTh,SaveSe,SaveFi,first,second,third;
@@ -423,6 +584,7 @@ if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
 					if((Roller4!=SaveSe)&&(Roller4!=SaveTh))FRoller.addItem(Roller4);
 					if((Roller5!=SaveSe)&&(Roller5!=SaveTh))FRoller.addItem(Roller5);
 					FRoller.setSelectedItem(SaveFi);
+					frame.requestFocus();
 				}}
 		});
 		SRoller.addActionListener(new ActionListener(){
@@ -439,6 +601,7 @@ if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
 					if((Roller4!=SaveFi)&&(Roller4!=SaveTh))SRoller.addItem(Roller4);
 					if((Roller5!=SaveFi)&&(Roller5!=SaveTh))SRoller.addItem(Roller5);
 					SRoller.setSelectedItem(SaveSe);
+					frame.requestFocus();
 				}}
 		});
 		TRoller.addActionListener(new ActionListener(){
@@ -455,12 +618,15 @@ if ((testChar[0]<91)&&(testChar[1]<91)&&(testChar[0]>64)&&(testChar[1]>64)){
 					if((Roller4!=SaveSe)&&(Roller4!=SaveFi))TRoller.addItem(Roller4);
 					if((Roller5!=SaveSe)&&(Roller5!=SaveFi))TRoller.addItem(Roller5);
 					TRoller.setSelectedItem(SaveTh);
+					frame.requestFocus();
 				}}
 		});
+		frame.requestFocus();
 		}
-		public void actionPerformed(ActionEvent a) {
+	public void actionPerformed(ActionEvent a) {
 			String str = a.getActionCommand();
 			if(str.equals("Beenden")) System.exit(0);
 			if(str.equals("Verlassen")) System.exit(0);
 		}
+
 }
