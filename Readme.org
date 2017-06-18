@@ -8,7 +8,7 @@ reloaded, for engineering students, winter semester 2004/2005, at the
 University Kiel.
 
 For the webpages of the course project (for summer semester 2003), see
-[[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss03/enigma/][here]]
+[[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss03/swpraktikum-enigma/][here]]
 
 
 ** Structure
