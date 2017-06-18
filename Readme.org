@@ -14,22 +14,6 @@ For the webpages of the course project (for summer semester 2003), see
 
 
 
-** Structure
-This is the root of the Snot-project from the summer term 2001.  The
-package contains the following files and subdirectories:
-
-  
-
-    - [[,/Readme.org]]:        this file
-    - [[./Prototyp]]:          requirement spec for that
-    - [[./Pflichtenheft/]]     requirement specification
-    - [[./Baselines]]:         short description about major
-                           development steps (CVS tags)
-    - [[./examples]]:          for testing
-    - [[./web]]:               some extra web-pages
-    - [[./tex/]]               common LaTeX-macros 
-
-
 ** Historical notes
 
 The repository has been resurrected by migrating from ~cvs~ via svn (using
