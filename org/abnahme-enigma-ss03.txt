@@ -1,0 +1,200 @@
+
+
+
+Gruppe 06
+--------
+
+Die Gruppe macht einen Powerpointvortrag. Hilmar redet, zumindest am
+Anfang; er macht den Wortführer, wie erwartet.  Die Gruppe macht eine
+Vorstellung des Klassendiagramms. Björn mach die Gui-Demo und danach teilen
+sie es sich ein wenig auf. Insgesamt eine gemeinsame Demo. Als Highlights
+betonen sie, daß die Gui skalierbar ist und Farben frei wählbar.
+
+
+
+Angriff wird erklärt.
+
+Er empfiehlt eclipse?
+
+Vortrag 1.3 = 90 Punkte + 47*.03 = 1.0
+
+--------------------------------------------------------
+
+Gruppe 03
+----------
+
+
+ Einführung durch Jürgen. Gui sieht ganz nett aus.
+
+ Demo 
+
+ Hilfe eingebaut
+
+ Malte Wulff: demo der Zygalski. schöne Gui
+
+  ----
+
+   Vortrag 2.0, 68. Punkte => 1.0
+
+-----------------------------
+
+Gruppe 02, Bennani Laafiret, Jan Waller
+       -------------------------------
+
+
+   Gui: Jan legt los
+
+   Bennani Laafiret: macht die Demo
+
+   Netbeans: alles 
+   
+
+   Demo: 2.7    = 70
+         40*0.3 = 12
+	          82 = 2.0 = 1.3
+
+		  Aufteilen 3.3
+
+-------------------------------------------
+
+		   
+
+Gruppe 04
+---------
+
+   Wladislaw: Vorstellung der Enigma allgemein und auch des Projektes
+   Insgesamt sehr gute Vorstellung, zwar keine Folien, aber sehr
+   strukturierte Darstellung, jeder wußte was zu sagen und jeder trug etwas
+   dazu bei. Kontentration auf
+   das wesentliche. Die Demo war abgesprochen, und jeder wußte über alles
+   bescheid.
+
+   Schöne Gui. 
+
+   Insesamt: 1.0
+
+   (ohne rechnung. Mit rechnung 70 *0.3 = 21
+                                          95 = 1.0
+					 ---
+					  > 100)
+
+
+
+======================================================
+
+Gruppe 08
+------------
+   [Vorleistung 10. Ziemlich schlechter Eindruck, nicht rechtzeitig
+    abgegeben
+     3ter Teil minimal, aber korrekt, alles was auf dem ersten Zettel
+     steht haben sie falsch gemacht. Es hängt viel von der Abnahme 
+     ab.
+
+     Nabil Zekri: Problemfall. Ansonsten: alle 3 gleich gut
+
+     Haben die am Wochenende was gemacht,
+     
+     positiv bestenfalls: eigentständig arbeiten]
+
+
+
+   Folienvortrag, sehr detailliert, die Demo ist gut, insofern
+   daß jeder was macht, die GUI sieht in Ordnung aus. Positiv
+   bewertet ist auch, daß sie sich nach der 3ten Abnahme noch
+   mal hingesetzt haben und nachgebessert. 
+
+
+   Andi machte die Vorstellung der Datenstrukturen und der Klassen,
+   ansonsten hat jeder seinen Teil beigetragen.
+
+
+    Forte sei Mist, sie behaupten, sie hätten
+
+
+
+      10 * 0.3    =  3
+      Note 2=     = 80
+                  -----
+            +     = 83  = 2
+
+
+Nabil  Zekri : ausgestiegen
+
+
+----------------------------------
+
+	Gruppe 09
+
+   (Wilm Hoyer ist raus, Grund unbekannt)
+
+
+      Jeder macht was in der Demo. Die alte Klassenstrukture
+      wir gezeigt.
+
+     52,5 * 0.3 = 15.75
+     1.7  =        85.00
+		  ----
+                          1.00    als Note
+
+Gruppe 07
+----------
+   Henning, Markus, Murat, Nicolas
+   ----------------------------------
+
+   Marcus macht die Vorstellung des ersten Teil
+
+   Henning macht den 2ten Teil. Abgefahrene Implementierung
+   der Gui.
+
+           2.7 = 70   (Vortrag etwas nerdy, und wirr)
+(* 42  0.3)      12.6
+                 82,6  Nominell
+
+Für Henning:
+  + (* 24 0.3) = 7.2
+                 -----
+		 90.0 = 1.3 Für Henning
+
+   
+             Henning bekommt angerechnet, daß er im 3ten Teil
+	     sich auf die anderen verlassen hat, aber nix gekommen ist.
+	     Das heißt, wir sind davon ausgegangen, daß  er auch
+	     im dritten Teil seine Leistung gebracht hätte, mit
+	     20 Punkten
+	     
+        die anderen arbeiten nach, bis zum 15.08
+
+
+===================================================
+
+
+Gruppe 11: Christian Max Rachid
+---------------------------------
+
+	Christian macht die erste Vorstellung, Christian macht
+	die Paketstruktur. Strukturierte Vorstellung
+
+         Max macht die Gui, ebenfalls schöne Darstellung.
+
+	 Rachid, nicht ganz so gut wie die anderen, aber
+	 das was er vorträgt hat er zumindest angeschaut.
+
+
+         29   => (* 65.00  0.3)  19.5
+	 1.3  => 90              90.0  1.3
+
+==================================================
+Gruppe 10:
+       Christian, Stefan Maik
+
+       
+     
+
+
+
+
+
+  
+
+
+
