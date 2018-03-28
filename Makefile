@@ -10,6 +10,7 @@ man:
 	@echo " make test  -  siehe make run"
 	@echo ""
 
+
 all:	doc
 	javac enigma/*.java
 	javac enigma/exceptions/*.java
