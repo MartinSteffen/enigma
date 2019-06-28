@@ -19,7 +19,7 @@ the original development was done all via a common login ~swprakt~ which
 therefore did not log the author; in general, the contributors were
 students in the course plus the course teachers.
 
-/Remark:/ the course was given also summer semester 2003 (with more
+/Remark:/ the course was given also in the summer semester 2003 (with more
 students), but the sources of the semester seem to have been lost. Also an
 earlier version of the course exists (given by the chair of theoretical
 computer science) and this course builds upon it.
