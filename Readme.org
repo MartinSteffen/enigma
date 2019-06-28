@@ -10,12 +10,9 @@ For the webpages of the course project (for summer semester 2003), see
 
 
 
-
-
-
 ** Historical notes
 
-The repository has been resurrected by migrating it xfrom ~cvs~ via svn
+The repository has been resurrected by migrating it from ~cvs~ via svn
 (using ~cvs2svn~) and from there to ~git~. Caveats concerning missing
 branches apply.  Also, original /authors/ may not have been preserved, as
 the original development was done all via a common login ~swprakt~ which
